@@ -5,7 +5,7 @@ export const metadata = {
   description: "Real-time sentiment intelligence platform tracking Nigerian public discourse.",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>{children}</body>
