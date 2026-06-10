@@ -178,7 +178,6 @@ function timeAgo(dateStr) {
   return `${Math.floor(hrs / 24)}d ago`;
 }
 
-// ─── LIVE DOT ────────────────────────────────────────────────
 function LiveDot({ label }) {
   return (
     <span style={{ display: "inline-flex", alignItems: "center", gap: "5px", background: "#dcfce7", border: "1px solid #86efac", borderRadius: "20px", padding: "4px 10px" }}>
@@ -188,7 +187,6 @@ function LiveDot({ label }) {
   );
 }
 
-// ─── NEWS TICKER ─────────────────────────────────────────────
 function NewsTicker({ articles }) {
   if (!articles.length) return null;
   const items = [...articles, ...articles];
@@ -205,7 +203,6 @@ function NewsTicker({ articles }) {
   );
 }
 
-// ─── INTENSITY BAR ───────────────────────────────────────────
 function IntensityBar({ value }) {
   const color = value >= 8 ? "#dc2626" : value >= 5 ? "#d97706" : "#16a34a";
   return (
@@ -218,60 +215,32 @@ function IntensityBar({ value }) {
   );
 }
 
-// ─── TOPIC CARD (large, editorial) ───────────────────────────
 function TopicCard({ topic, index, isActive, t, reactions, onReact, onDetailClick }) {
   const accentColors = ["#008751", "#2563eb", "#dc2626", "#d97706", "#7c3aed"];
   const color = accentColors[index] || "#6b7280";
-
   return (
     <div
       onClick={onDetailClick}
-      style={{
-        background: "#fff",
-        border: `1px solid ${isActive ? color + "40" : "#e5e7eb"}`,
-        borderRadius: "16px",
-        overflow: "hidden",
-        transition: "box-shadow 0.25s, transform 0.25s",
-        boxShadow: isActive ? `0 6px 24px ${color}18` : "none",
-        display: "flex",
-        flexDirection: "column",
-        cursor: "pointer",
-      }}
+      style={{ background: "#fff", border: `1px solid ${isActive ? color + "40" : "#e5e7eb"}`, borderRadius: "16px", overflow: "hidden", transition: "box-shadow 0.25s, transform 0.25s", boxShadow: isActive ? `0 6px 24px ${color}18` : "none", display: "flex", flexDirection: "column", cursor: "pointer" }}
       onMouseEnter={e => { e.currentTarget.style.boxShadow = `0 10px 36px ${color}18`; e.currentTarget.style.transform = "translateY(-3px)"; }}
       onMouseLeave={e => { e.currentTarget.style.boxShadow = isActive ? `0 6px 24px ${color}18` : "none"; e.currentTarget.style.transform = "translateY(0)"; }}
     >
       <div style={{ height: "5px", background: color }} />
       <div style={{ padding: "24px 24px 20px", flex: 1, display: "flex", flexDirection: "column" }}>
         <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: "14px" }}>
-          <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "42px", fontWeight: 800, color: "#f3f4f6", lineHeight: 1, letterSpacing: "-0.03em" }}>
-            {String(index + 1).padStart(2, "0")}
-          </span>
+          <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "42px", fontWeight: 800, color: "#f3f4f6", lineHeight: 1, letterSpacing: "-0.03em" }}>{String(index + 1).padStart(2, "0")}</span>
           <div style={{ display: "flex", gap: "5px", flexWrap: "wrap", justifyContent: "flex-end" }}>
-            {topic.in_govt_agenda && (
-              <span style={{ fontSize: "10px", background: "#dcfce7", color: "#15803d", border: "1px solid #86efac", borderRadius: "20px", padding: "3px 9px", fontWeight: 600, letterSpacing: "0.04em" }}>{t.govtBadge}</span>
-            )}
-            {topic.foreign_impact && (
-              <span style={{ fontSize: "10px", background: "#fef3c7", color: "#92400e", border: "1px solid #fcd34d", borderRadius: "20px", padding: "3px 9px", fontWeight: 600, letterSpacing: "0.04em" }}>{t.globalBadge}</span>
-            )}
+            {topic.in_govt_agenda && <span style={{ fontSize: "10px", background: "#dcfce7", color: "#15803d", border: "1px solid #86efac", borderRadius: "20px", padding: "3px 9px", fontWeight: 600, letterSpacing: "0.04em" }}>{t.govtBadge}</span>}
+            {topic.foreign_impact && <span style={{ fontSize: "10px", background: "#fef3c7", color: "#92400e", border: "1px solid #fcd34d", borderRadius: "20px", padding: "3px 9px", fontWeight: 600, letterSpacing: "0.04em" }}>{t.globalBadge}</span>}
             {topic.sentiment && (
-              <span style={{
-                fontSize: "10px",
-                background: topic.sentiment === "positive" ? "#dcfce7" : topic.sentiment === "negative" ? "#fee2e2" : "#f1f5f9",
-                color: topic.sentiment === "positive" ? "#15803d" : topic.sentiment === "negative" ? "#b91c1c" : "#475569",
-                borderRadius: "20px", padding: "3px 9px", fontWeight: 600, textTransform: "capitalize",
-              }}>
+              <span style={{ fontSize: "10px", background: topic.sentiment === "positive" ? "#dcfce7" : topic.sentiment === "negative" ? "#fee2e2" : "#f1f5f9", color: topic.sentiment === "positive" ? "#15803d" : topic.sentiment === "negative" ? "#b91c1c" : "#475569", borderRadius: "20px", padding: "3px 9px", fontWeight: 600, textTransform: "capitalize" }}>
                 {topic.sentiment === "positive" ? "↑" : topic.sentiment === "negative" ? "↓" : "→"} {topic.sentiment}
               </span>
             )}
           </div>
         </div>
-
-        <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "20px", fontWeight: 700, color: "#111827", lineHeight: 1.3, marginBottom: "10px", letterSpacing: "-0.01em" }}>
-          {topic.name}
-        </h3>
-        <p style={{ fontSize: "14px", color: "#4b5563", lineHeight: 1.65, marginBottom: "18px", flex: 1 }}>
-          {topic.summary}
-        </p>
+        <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "20px", fontWeight: 700, color: "#111827", lineHeight: 1.3, marginBottom: "10px", letterSpacing: "-0.01em" }}>{topic.name}</h3>
+        <p style={{ fontSize: "14px", color: "#4b5563", lineHeight: 1.65, marginBottom: "18px", flex: 1 }}>{topic.summary}</p>
         <div style={{ marginBottom: "16px" }}>
           <div style={{ fontSize: "10px", color: "#9ca3af", letterSpacing: "0.1em", marginBottom: "6px" }}>INTENSITY</div>
           <IntensityBar value={topic.intensity} />
@@ -280,17 +249,10 @@ function TopicCard({ topic, index, isActive, t, reactions, onReact, onDetailClic
           {(topic.sources_cited || topic.sources || []).slice(0, 3).map((s, i) => (
             <span key={i} style={{ fontSize: "10px", background: "#f9fafb", border: "1px solid #e5e7eb", borderRadius: "4px", padding: "3px 8px", color: "#6b7280", letterSpacing: "0.02em" }}>{s}</span>
           ))}
-          {topic.category && (
-            <span style={{ fontSize: "10px", background: color + "10", border: `1px solid ${color}30`, borderRadius: "4px", padding: "3px 8px", color, fontWeight: 600, letterSpacing: "0.04em", marginLeft: "auto", textTransform: "uppercase" }}>{topic.category}</span>
-          )}
+          {topic.category && <span style={{ fontSize: "10px", background: color + "10", border: `1px solid ${color}30`, borderRadius: "4px", padding: "3px 8px", color, fontWeight: 600, letterSpacing: "0.04em", marginLeft: "auto", textTransform: "uppercase" }}>{topic.category}</span>}
         </div>
         <div style={{ paddingTop: "14px", borderTop: "1px solid #f3f4f6", display: "flex", alignItems: "center", gap: "6px", flexWrap: "wrap" }}>
-          {[
-            { key: "fire", label: "Hot" },
-            { key: "clap", label: "Good" },
-            { key: "angry", label: "Bad" },
-            { key: "wow", label: "Wow" },
-          ].map(({ key, label }) => (
+          {[{ key: "fire", label: "Hot" }, { key: "clap", label: "Good" }, { key: "angry", label: "Bad" }, { key: "wow", label: "Wow" }].map(({ key, label }) => (
             <button key={key} onClick={e => { e.stopPropagation(); onReact(topic.name, key); }}
               style={{ display: "flex", alignItems: "center", gap: "4px", background: "#f9fafb", border: "1px solid #e5e7eb", borderRadius: "20px", padding: "4px 10px", cursor: "pointer", fontSize: "11px", color: "#6b7280", fontWeight: 500, transition: "background 0.15s", fontFamily: "inherit" }}
               onMouseEnter={e => e.currentTarget.style.background = "#f3f4f6"}
@@ -304,16 +266,13 @@ function TopicCard({ topic, index, isActive, t, reactions, onReact, onDetailClic
             style={{ marginLeft: "auto", fontSize: "12px", fontWeight: 700, color, background: color + "10", border: `1px solid ${color}30`, borderRadius: "20px", padding: "6px 14px", cursor: "pointer", fontFamily: "inherit", transition: "background 0.15s" }}
             onMouseEnter={e => e.currentTarget.style.background = color + "20"}
             onMouseLeave={e => e.currentTarget.style.background = color + "10"}
-          >
-            Full analysis →
-          </button>
+          >Full analysis →</button>
         </div>
       </div>
     </div>
   );
 }
 
-// ─── FOREIGN ALERT CARD ──────────────────────────────────────
 function ForeignAlertCard({ alert }) {
   const sectorColors = { oil: "#ea580c", forex: "#d97706", diaspora: "#7c3aed", trade: "#2563eb", security: "#dc2626", food: "#16a34a", other: "#6b7280" };
   const sectorBgs = { oil: "#fff7ed", forex: "#fef3c7", diaspora: "#f5f3ff", trade: "#eff6ff", security: "#fee2e2", food: "#dcfce7", other: "#f9fafb" };
@@ -352,7 +311,6 @@ function ForeignAlertCard({ alert }) {
   );
 }
 
-// ─── SOCIAL CARD ─────────────────────────────────────────────
 function SocialCard({ item, accentColor }) {
   return (
     <a href={item.link} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
@@ -370,7 +328,6 @@ function SocialCard({ item, accentColor }) {
   );
 }
 
-// ─── NIGERIA MAP ─────────────────────────────────────────────
 function NigeriaMap({ t }) {
   const [hovered, setHovered] = useState(null);
   const zones = [
@@ -412,9 +369,7 @@ function NigeriaMap({ t }) {
               <p style={{ fontWeight: 700, fontSize: "13px", color: "#111827", marginBottom: "5px" }}>{hovered.label}</p>
               <p style={{ fontSize: "12px", color: "#6b7280", marginBottom: "7px" }}>Score: <strong style={{ color: "#111827" }}>{hovered.score}/10</strong></p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: "4px" }}>
-                {hovered.topics.map(tp => (
-                  <span key={tp} style={{ fontSize: "11px", background: "#fff", border: "1px solid #e5e7eb", borderRadius: "4px", padding: "2px 7px", color: "#374151" }}>{tp}</span>
-                ))}
+                {hovered.topics.map(tp => <span key={tp} style={{ fontSize: "11px", background: "#fff", border: "1px solid #e5e7eb", borderRadius: "4px", padding: "2px 7px", color: "#374151" }}>{tp}</span>)}
               </div>
             </div>
           )}
@@ -435,8 +390,8 @@ function NigeriaMap({ t }) {
   );
 }
 
-// ─── AI CHAT WIDGET ─────────────────────────────────────────
-// Now includes social sharing panel inside the widget
+// ─── AI CHAT WIDGET ──────────────────────────────────────────
+// FIXED: now calls /api/ai-chat on your backend instead of Anthropic directly
 function AIChatWidget({ t, isOpen, onClose, pulse }) {
   const [messages, setMessages] = useState([{ role: "assistant", content: t.aiWelcome }]);
   const [input, setInput] = useState("");
@@ -446,46 +401,22 @@ function AIChatWidget({ t, isOpen, onClose, pulse }) {
 
   useEffect(() => { endRef.current?.scrollIntoView({ behavior: "smooth" }); }, [messages]);
 
-  // Build shareable text from the last assistant message
   const getShareText = () => {
     const lastAI = [...messages].reverse().find(m => m.role === "assistant");
-    return lastAI ? `Nigeria Pulse AI: "${lastAI.content.slice(0, 120)}…" — nigeriapulse.com` : "Check out Nigeria Pulse — Real-Time National Intelligence. nigeriapulse.com";
+    return lastAI
+      ? `Nigeria Pulse AI: "${lastAI.content.slice(0, 120)}…" — nigeriapulse.com`
+      : "Check out Nigeria Pulse — Real-Time National Intelligence. nigeriapulse.com";
   };
 
   const shareLinks = [
-    {
-      label: "WhatsApp",
-      color: "#25d366",
-      letter: "W",
-      url: () => `https://wa.me/?text=${encodeURIComponent(getShareText())}`,
-    },
-    {
-      label: "X / Twitter",
-      color: "#000",
-      letter: "X",
-      url: () => `https://twitter.com/intent/tweet?text=${encodeURIComponent(getShareText())}`,
-    },
-    {
-      label: "Facebook",
-      color: "#1877f2",
-      letter: "f",
-      url: () => `https://www.facebook.com/sharer/sharer.php?u=https://nigeriapulse.com&quote=${encodeURIComponent(getShareText())}`,
-    },
-    {
-      label: "LinkedIn",
-      color: "#0077b5",
-      letter: "in",
-      url: () => `https://www.linkedin.com/sharing/share-offsite/?url=https://nigeriapulse.com`,
-    },
-    {
-      label: "Copy link",
-      color: "#6b7280",
-      letter: "⧉",
-      url: () => null,
-      action: () => { navigator.clipboard?.writeText(getShareText()); setShowShare(false); },
-    },
+    { label: "WhatsApp", color: "#25d366", letter: "W", url: () => `https://wa.me/?text=${encodeURIComponent(getShareText())}` },
+    { label: "X / Twitter", color: "#000", letter: "X", url: () => `https://twitter.com/intent/tweet?text=${encodeURIComponent(getShareText())}` },
+    { label: "Facebook", color: "#1877f2", letter: "f", url: () => `https://www.facebook.com/sharer/sharer.php?u=https://nigeriapulse.com&quote=${encodeURIComponent(getShareText())}` },
+    { label: "LinkedIn", color: "#0077b5", letter: "in", url: () => `https://www.linkedin.com/sharing/share-offsite/?url=https://nigeriapulse.com` },
+    { label: "Copy link", color: "#6b7280", letter: "⧉", url: () => null, action: () => { navigator.clipboard?.writeText(getShareText()); setShowShare(false); } },
   ];
 
+  // ── FIXED SEND FUNCTION ──────────────────────────────────
   const send = async () => {
     if (!input.trim() || loading) return;
     const userMsg = input.trim();
@@ -493,28 +424,38 @@ function AIChatWidget({ t, isOpen, onClose, pulse }) {
     setMessages(prev => [...prev, { role: "user", content: userMsg }]);
     setLoading(true);
     try {
-      const context = pulse ? `Top topics: ${pulse.top_topics?.map(tp => tp.name).join(", ")}. Sentiment: ${pulse.overall_sentiment}.` : "";
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
+      const context = pulse
+        ? `Top topics: ${pulse.top_topics?.map(tp => tp.name).join(", ")}. Sentiment: ${pulse.overall_sentiment}.`
+        : "";
+
+      // ✅ Now calls YOUR backend — no more CORS error
+      const res = await fetch(`${API}/api/ai-chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
-          max_tokens: 1000,
-          system: `You are Nigeria Pulse AI assistant. Help users understand Nigerian news. Be concise and factual. Context: ${context}`,
-          messages: messages.filter(m => m.role !== "system").concat({ role: "user", content: userMsg }),
+          context,
+          messages: messages
+            .filter(m => m.role !== "system")
+            .concat({ role: "user", content: userMsg }),
         }),
       });
       const data = await res.json();
-      setMessages(prev => [...prev, { role: "assistant", content: data.content?.[0]?.text || "Connection error." }]);
+      setMessages(prev => [...prev, {
+        role: "assistant",
+        content: data.text || "Sorry, I could not get a response. Please try again.",
+      }]);
     } catch {
-      setMessages(prev => [...prev, { role: "assistant", content: "Connection error. Please try again." }]);
+      setMessages(prev => [...prev, {
+        role: "assistant",
+        content: "Connection error. Make sure the backend is running on port 3001.",
+      }]);
     } finally { setLoading(false); }
   };
+  // ─────────────────────────────────────────────────────────
 
   if (!isOpen) return null;
   return (
     <div style={{ position: "fixed", bottom: "88px", right: "24px", width: "360px", maxHeight: "540px", background: "#fff", border: "1px solid #e5e7eb", borderRadius: "20px", boxShadow: "0 20px 60px rgba(0,0,0,0.15)", zIndex: 1000, display: "flex", flexDirection: "column", overflow: "hidden" }}>
-      {/* Header */}
       <div style={{ background: "#008751", padding: "14px 18px", display: "flex", alignItems: "center", justifyContent: "space-between", flexShrink: 0 }}>
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
           <div style={{ width: "32px", height: "32px", borderRadius: "50%", background: "rgba(255,255,255,0.2)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "11px", fontWeight: 700, color: "#fff", fontFamily: "'Playfair Display', serif" }}>NP</div>
@@ -524,44 +465,31 @@ function AIChatWidget({ t, isOpen, onClose, pulse }) {
           </div>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-          {/* Share toggle button */}
-          <button
-            onClick={() => setShowShare(s => !s)}
-            title={t.aiShare}
-            style={{ background: "rgba(255,255,255,0.15)", border: "none", borderRadius: "20px", padding: "5px 10px", color: "#fff", cursor: "pointer", fontSize: "11px", fontWeight: 600, letterSpacing: "0.04em", display: "flex", alignItems: "center", gap: "4px" }}
-          >
+          <button onClick={() => setShowShare(s => !s)} title={t.aiShare}
+            style={{ background: "rgba(255,255,255,0.15)", border: "none", borderRadius: "20px", padding: "5px 10px", color: "#fff", cursor: "pointer", fontSize: "11px", fontWeight: 600, letterSpacing: "0.04em", display: "flex", alignItems: "center", gap: "4px" }}>
             <span style={{ fontSize: "12px" }}>↗</span> {t.aiShare}
           </button>
           <button onClick={onClose} style={{ background: "rgba(255,255,255,0.15)", border: "none", borderRadius: "50%", width: "26px", height: "26px", color: "#fff", cursor: "pointer", fontSize: "16px", display: "flex", alignItems: "center", justifyContent: "center" }}>×</button>
         </div>
       </div>
 
-      {/* Share panel — slides in when open */}
       {showShare && (
         <div style={{ background: "#f9fafb", borderBottom: "1px solid #e5e7eb", padding: "14px 18px", flexShrink: 0 }}>
           <p style={{ fontSize: "11px", color: "#6b7280", fontWeight: 600, letterSpacing: "0.08em", marginBottom: "10px", textTransform: "uppercase" }}>Share Nigeria Pulse</p>
           <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
             {shareLinks.map(({ label, color, letter, url, action }) => (
-              <a
-                key={label}
-                href={url() || undefined}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={action ? (e) => { e.preventDefault(); action(); } : undefined}
-                title={label}
+              <a key={label} href={url() || undefined} target="_blank" rel="noopener noreferrer"
+                onClick={action ? e => { e.preventDefault(); action(); } : undefined} title={label}
                 style={{ width: "40px", height: "40px", borderRadius: "50%", background: "#fff", border: `1.5px solid ${color}30`, display: "flex", alignItems: "center", justifyContent: "center", textDecoration: "none", fontSize: "12px", fontWeight: 700, color, boxShadow: "0 1px 4px rgba(0,0,0,0.06)", transition: "all 0.18s", cursor: "pointer" }}
                 onMouseEnter={e => { e.currentTarget.style.background = color; e.currentTarget.style.color = "#fff"; }}
                 onMouseLeave={e => { e.currentTarget.style.background = "#fff"; e.currentTarget.style.color = color; }}
-              >
-                {letter}
-              </a>
+              >{letter}</a>
             ))}
           </div>
           <p style={{ fontSize: "10px", color: "#9ca3af", marginTop: "8px", lineHeight: 1.5 }}>Shares the latest AI insight from this conversation.</p>
         </div>
       )}
 
-      {/* Messages */}
       <div style={{ flex: 1, overflowY: "auto", padding: "14px", display: "flex", flexDirection: "column", gap: "10px" }}>
         {messages.map((msg, i) => (
           <div key={i} style={{ display: "flex", justifyContent: msg.role === "user" ? "flex-end" : "flex-start" }}>
@@ -578,7 +506,6 @@ function AIChatWidget({ t, isOpen, onClose, pulse }) {
         <div ref={endRef} />
       </div>
 
-      {/* Input */}
       <div style={{ padding: "10px 14px", borderTop: "1px solid #e5e7eb", display: "flex", gap: "7px", flexShrink: 0 }}>
         <input value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key === "Enter" && send()} placeholder={t.aiAsk}
           style={{ flex: 1, padding: "9px 13px", border: "1px solid #e5e7eb", borderRadius: "20px", fontSize: "13px", outline: "none", color: "#111827", background: "#f9fafb" }} />
@@ -588,7 +515,6 @@ function AIChatWidget({ t, isOpen, onClose, pulse }) {
   );
 }
 
-// ─── SKELETON ────────────────────────────────────────────────
 function Skeleton({ h = 20, w = "100%", mb = 0, dark = false }) {
   const bg = dark
     ? "linear-gradient(90deg,#1a1a1a 25%,#222 50%,#1a1a1a 75%)"
@@ -596,7 +522,6 @@ function Skeleton({ h = 20, w = "100%", mb = 0, dark = false }) {
   return <div style={{ height: h, width: w, background: bg, backgroundSize: "200% 100%", animation: "shimmer 1.5s infinite", borderRadius: 8, marginBottom: mb }} />;
 }
 
-// ─── MAIN PAGE ───────────────────────────────────────────────
 export default function Home() {
   const router = useRouter();
   const [pulse, setPulse] = useState(null);
@@ -619,7 +544,6 @@ export default function Home() {
   const [subscribeLoading, setSubscribeLoading] = useState(false);
   const [subscribeSuccess, setSubscribeSuccess] = useState(false);
   const [subscribeError, setSubscribeError] = useState("");
-  // Pulse/beat tick for hero animation
   const [heroPulse, setHeroPulse] = useState(false);
 
   const t = TRANSLATIONS[lang] || TRANSLATIONS.en;
@@ -634,11 +558,9 @@ export default function Home() {
     cardBg: "#fff", cardBorder: "#e5e7eb", inputBg: "#fff", inputBorder: "#e5e7eb", inputColor: "#111827",
   };
 
-  // Rotate active topic every 8 seconds
   useEffect(() => {
     const id = setInterval(() => {
       setActiveTopicIndex(prev => (prev + 1) % 5);
-      // Trigger pulse flash on topic change
       setHeroPulse(true);
       setTimeout(() => setHeroPulse(false), 700);
     }, 8000);
@@ -693,17 +615,14 @@ export default function Home() {
 
   const formatTime = d => d ? new Date(d).toLocaleTimeString("en-NG", { hour: "2-digit", minute: "2-digit" }) : "";
 
-  const reddit = socialSignals.filter(s => s.category === "social_reddit");
-  const trends = socialSignals.filter(s => s.category === "trending_search");
-  const youtube = socialSignals.filter(s => s.category === "social_video");
+  const reddit   = socialSignals.filter(s => s.category === "social_reddit");
+  const trends   = socialSignals.filter(s => s.category === "trending_search");
+  const youtube  = socialSignals.filter(s => s.category === "social_video");
   const comments = socialSignals.filter(s => s.category === "youtube_comment");
-  const signals = socialSignals.filter(s => s.category === "social_signal");
+  const signals  = socialSignals.filter(s => s.category === "social_signal");
 
   const handleReact = (topicName, key) => {
-    setReactions(prev => ({
-      ...prev,
-      [topicName]: { ...(prev[topicName] || {}), [key]: ((prev[topicName]?.[key]) || 0) + 1 }
-    }));
+    setReactions(prev => ({ ...prev, [topicName]: { ...(prev[topicName] || {}), [key]: ((prev[topicName]?.[key]) || 0) + 1 } }));
   };
 
   const handleSubscribe = async () => {
@@ -724,13 +643,10 @@ export default function Home() {
 
   const tabs = [{ id: "pulse", label: t.tabs[0] }, { id: "foreign", label: t.tabs[1] }, { id: "social", label: t.tabs[2] }];
   const langs = [{ code: "en", label: "EN" }, { code: "ha", label: "HA" }, { code: "yo", label: "YO" }];
-
   const currentTopic = pulse?.top_topics?.[activeTopicIndex];
 
   return (
     <div style={{ minHeight: "100vh", background: theme.bg, color: theme.text, transition: "background 0.3s, color 0.3s" }}>
-
-      {/* ── GLOBAL STYLES ── */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap');
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -741,7 +657,6 @@ export default function Home() {
         @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
         @keyframes bounce { 0%,80%,100%{transform:translateY(0)} 40%{transform:translateY(-5px)} }
         @keyframes heroFlash { 0%{opacity:0.4} 100%{opacity:1} }
-        @keyframes scanline { 0%{transform:translateY(-100%)} 100%{transform:translateY(400%)} }
         @keyframes countUp { from{opacity:0;transform:scale(0.85)} to{opacity:1;transform:scale(1)} }
         .topic-card { animation: fadeUp 0.5s ease both; }
         input::placeholder { color: #9ca3af; }
@@ -751,23 +666,18 @@ export default function Home() {
         ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 2px; }
       `}</style>
 
-      {/* ── HEADER ── */}
+      {/* HEADER */}
       <header style={{ position: "sticky", top: 0, background: theme.headerBg, backdropFilter: "blur(14px)", borderBottom: `1px solid ${theme.border}`, zIndex: 100, padding: "0 24px" }}>
         <div style={{ maxWidth: "1280px", margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", height: "62px", gap: "12px" }}>
-          {/* Logo */}
           <div style={{ display: "flex", alignItems: "center", gap: "10px", flexShrink: 0 }}>
             <div style={{ width: "32px", height: "32px", borderRadius: "8px", background: "#008751", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
               <div style={{ width: "14px", height: "2px", background: "#fff", borderRadius: "1px" }} />
             </div>
             <div>
-              <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "17px", fontWeight: 800, color: theme.text, margin: 0, letterSpacing: "-0.01em" }}>
-                Nigeria <span style={{ color: "#008751" }}>Pulse</span>
-              </h1>
+              <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "17px", fontWeight: 800, color: theme.text, margin: 0, letterSpacing: "-0.01em" }}>Nigeria <span style={{ color: "#008751" }}>Pulse</span></h1>
               <p style={{ fontSize: "9px", color: theme.textMuted, letterSpacing: "0.12em", textTransform: "uppercase", margin: 0 }}>{t.tagline}</p>
             </div>
           </div>
-
-          {/* Controls */}
           <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
             <div style={{ display: "flex", background: theme.surface2, border: `1px solid ${theme.border}`, borderRadius: "20px", padding: "2px" }}>
               {langs.map(l => (
@@ -787,67 +697,21 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Breaking news ticker */}
       <NewsTicker articles={news.slice(0, 12)} />
 
-      {/* ══════════════════════════════════════════════════════
-          ── HERO — Full redesign: editorial + dramatic
-         ══════════════════════════════════════════════════════ */}
-      <section style={{
-        background: darkMode
-          ? "linear-gradient(160deg, #0a0a0a 0%, #0d1a11 60%, #0a0a0a 100%)"
-          : "linear-gradient(160deg, #f0fdf4 0%, #fff 55%, #f8fafc 100%)",
-        borderBottom: `1px solid ${theme.border}`,
-        padding: "0",
-        overflow: "hidden",
-        position: "relative",
-      }}>
-
-        {/* Large decorative background text — "NIGERIA" watermark */}
-        <div style={{
-          position: "absolute", top: "50%", left: "50%",
-          transform: "translate(-50%, -50%)",
-          fontFamily: "'Playfair Display', serif",
-          fontSize: "clamp(80px, 18vw, 220px)",
-          fontWeight: 800,
-          color: darkMode ? "rgba(0,135,81,0.04)" : "rgba(0,135,81,0.05)",
-          whiteSpace: "nowrap",
-          pointerEvents: "none",
-          userSelect: "none",
-          letterSpacing: "-0.04em",
-          lineHeight: 1,
-        }}>NIGERIA</div>
-
-        {/* Left green border accent */}
-        <div style={{
-          position: "absolute", left: 0, top: 0, bottom: 0,
-          width: "4px",
-          background: "linear-gradient(180deg, #008751 0%, #00b86a 50%, #008751 100%)",
-        }} />
-
+      {/* HERO */}
+      <section style={{ background: darkMode ? "linear-gradient(160deg, #0a0a0a 0%, #0d1a11 60%, #0a0a0a 100%)" : "linear-gradient(160deg, #f0fdf4 0%, #fff 55%, #f8fafc 100%)", borderBottom: `1px solid ${theme.border}`, padding: "0", overflow: "hidden", position: "relative" }}>
+        <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", fontFamily: "'Playfair Display', serif", fontSize: "clamp(80px, 18vw, 220px)", fontWeight: 800, color: darkMode ? "rgba(0,135,81,0.04)" : "rgba(0,135,81,0.05)", whiteSpace: "nowrap", pointerEvents: "none", userSelect: "none", letterSpacing: "-0.04em", lineHeight: 1 }}>NIGERIA</div>
+        <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: "4px", background: "linear-gradient(180deg, #008751 0%, #00b86a 50%, #008751 100%)" }} />
         <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "64px 40px 52px", position: "relative", zIndex: 1 }}>
-
-          {/* Top row: overline badge + live stats */}
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "12px", marginBottom: "32px" }}>
-
-            {/* "What Nigeria Is Thinking Right Now" — BIG, bold, unmissable */}
             <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-              {/* Animated pulse dot */}
               <div style={{ position: "relative", width: "14px", height: "14px", flexShrink: 0 }}>
                 <div style={{ position: "absolute", inset: 0, borderRadius: "50%", background: "#008751", opacity: 0.25, animation: "pulseDot 2s ease infinite", transform: "scale(2.2)" }} />
                 <div style={{ position: "absolute", inset: "2px", borderRadius: "50%", background: "#008751" }} />
               </div>
-              <span style={{
-                fontFamily: "'Playfair Display', serif",
-                fontSize: "clamp(15px, 2.2vw, 22px)",
-                fontWeight: 700,
-                fontStyle: "italic",
-                color: darkMode ? "#4ade80" : "#008751",
-                letterSpacing: "-0.01em",
-              }}>{t.heroOverline}</span>
+              <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(15px, 2.2vw, 22px)", fontWeight: 700, fontStyle: "italic", color: darkMode ? "#4ade80" : "#008751", letterSpacing: "-0.01em" }}>{t.heroOverline}</span>
             </div>
-
-            {/* Live stats row — top right */}
             <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
               {[
                 { val: pulse?.total_articles_analyzed || "—", label: t.signalsAnalyzed, color: "#008751" },
@@ -855,105 +719,40 @@ export default function Home() {
                 foreignAlerts.length > 0 && { val: foreignAlerts.length, label: t.alertsCount, color: "#ea580c" },
                 socialSignals.length > 0 && { val: socialSignals.length, label: "social", color: "#7c3aed" },
               ].filter(Boolean).map((item, i) => (
-                <div key={i} style={{
-                  background: darkMode ? "rgba(255,255,255,0.04)" : "rgba(0,135,81,0.06)",
-                  border: `1px solid ${darkMode ? "rgba(0,135,81,0.2)" : "rgba(0,135,81,0.15)"}`,
-                  borderRadius: "10px",
-                  padding: "7px 14px",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  minWidth: "60px",
-                }}>
-                  <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "18px", fontWeight: 800, color: item.color, lineHeight: 1, animation: "countUp 0.6s ease" }}>{item.val}</span>
+                <div key={i} style={{ background: darkMode ? "rgba(255,255,255,0.04)" : "rgba(0,135,81,0.06)", border: `1px solid ${darkMode ? "rgba(0,135,81,0.2)" : "rgba(0,135,81,0.15)"}`, borderRadius: "10px", padding: "7px 14px", display: "flex", flexDirection: "column", alignItems: "center", minWidth: "60px" }}>
+                  <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "18px", fontWeight: 800, color: item.color, lineHeight: 1 }}>{item.val}</span>
                   <span style={{ fontSize: "9px", color: theme.textMuted, letterSpacing: "0.08em", textTransform: "uppercase", marginTop: "2px" }}>{item.label}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* ── MAIN HEADLINE BLOCK ── */}
           <div style={{ maxWidth: "820px" }}>
-
-            {/* Topic number badge */}
             {!loading && currentTopic && (
               <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", marginBottom: "16px" }}>
-                <span style={{
-                  fontFamily: "'Playfair Display', serif",
-                  fontSize: "11px",
-                  fontWeight: 700,
-                  background: "#008751",
-                  color: "#fff",
-                  borderRadius: "6px",
-                  padding: "4px 10px",
-                  letterSpacing: "0.1em",
-                  textTransform: "uppercase",
-                }}>#{activeTopicIndex + 1} Trending</span>
-                {currentTopic.category && (
-                  <span style={{ fontSize: "11px", color: theme.textMuted, background: theme.surface2, border: `1px solid ${theme.border}`, borderRadius: "6px", padding: "4px 10px", letterSpacing: "0.06em", textTransform: "uppercase" }}>{currentTopic.category}</span>
-                )}
+                <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "11px", fontWeight: 700, background: "#008751", color: "#fff", borderRadius: "6px", padding: "4px 10px", letterSpacing: "0.1em", textTransform: "uppercase" }}>#{activeTopicIndex + 1} Trending</span>
+                {currentTopic.category && <span style={{ fontSize: "11px", color: theme.textMuted, background: theme.surface2, border: `1px solid ${theme.border}`, borderRadius: "6px", padding: "4px 10px", letterSpacing: "0.06em", textTransform: "uppercase" }}>{currentTopic.category}</span>}
               </div>
             )}
-
-            {/* The big headline */}
-            <h2 style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: "clamp(36px, 5.5vw, 72px)",
-              fontWeight: 800,
-              letterSpacing: "-0.03em",
-              lineHeight: 1.05,
-              color: theme.text,
-              marginBottom: "18px",
-              animation: heroPulse ? "heroFlash 0.6s ease" : "none",
-            }}>
-              {loading ? (
-                <span style={{ color: theme.textMuted, fontStyle: "italic" }}>Loading intelligence…</span>
-              ) : currentTopic?.name ? (
-                <>
-                  <span style={{
-                    color: "#008751",
-                    fontStyle: "italic",
-                    borderBottom: darkMode ? "3px solid rgba(0,135,81,0.4)" : "3px solid rgba(0,135,81,0.25)",
-                    paddingBottom: "2px",
-                  }}>{currentTopic.name}</span>
-                  <br />
-                  <span style={{ color: theme.textMuted, fontWeight: 400, fontSize: "clamp(18px, 2.4vw, 32px)", fontStyle: "normal" }}>
-                    {t.heroSuffix}
-                  </span>
-                </>
-              ) : (
-                t.heroDefault
-              )}
+            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(36px, 5.5vw, 72px)", fontWeight: 800, letterSpacing: "-0.03em", lineHeight: 1.05, color: theme.text, marginBottom: "18px", animation: heroPulse ? "heroFlash 0.6s ease" : "none" }}>
+              {loading ? <span style={{ color: theme.textMuted, fontStyle: "italic" }}>Loading intelligence…</span>
+                : currentTopic?.name ? (
+                  <>
+                    <span style={{ color: "#008751", fontStyle: "italic", borderBottom: darkMode ? "3px solid rgba(0,135,81,0.4)" : "3px solid rgba(0,135,81,0.25)", paddingBottom: "2px" }}>{currentTopic.name}</span>
+                    <br />
+                    <span style={{ color: theme.textMuted, fontWeight: 400, fontSize: "clamp(18px, 2.4vw, 32px)", fontStyle: "normal" }}>{t.heroSuffix}</span>
+                  </>
+                ) : t.heroDefault}
             </h2>
-
-            {/* Summary of active topic */}
             {!loading && currentTopic?.summary && (
-              <p style={{
-                fontSize: "clamp(14px, 1.4vw, 17px)",
-                color: theme.textMuted,
-                lineHeight: 1.75,
-                maxWidth: "580px",
-                marginBottom: "28px",
-                borderLeft: "3px solid rgba(0,135,81,0.4)",
-                paddingLeft: "16px",
-              }}>
+              <p style={{ fontSize: "clamp(14px, 1.4vw, 17px)", color: theme.textMuted, lineHeight: 1.75, maxWidth: "580px", marginBottom: "28px", borderLeft: "3px solid rgba(0,135,81,0.4)", paddingLeft: "16px" }}>
                 {currentTopic.summary}
               </p>
             )}
-
-            {/* Source tag + intensity indicator for the active topic */}
             {!loading && currentTopic && (
               <div style={{ display: "flex", alignItems: "center", gap: "14px", flexWrap: "wrap", marginBottom: "28px" }}>
                 {currentTopic.sentiment && (
-                  <span style={{
-                    fontSize: "12px",
-                    fontWeight: 700,
-                    background: currentTopic.sentiment === "positive" ? "#dcfce7" : currentTopic.sentiment === "negative" ? "#fee2e2" : "#f1f5f9",
-                    color: currentTopic.sentiment === "positive" ? "#15803d" : currentTopic.sentiment === "negative" ? "#b91c1c" : "#475569",
-                    borderRadius: "20px",
-                    padding: "5px 12px",
-                    textTransform: "capitalize",
-                  }}>
+                  <span style={{ fontSize: "12px", fontWeight: 700, background: currentTopic.sentiment === "positive" ? "#dcfce7" : currentTopic.sentiment === "negative" ? "#fee2e2" : "#f1f5f9", color: currentTopic.sentiment === "positive" ? "#15803d" : currentTopic.sentiment === "negative" ? "#b91c1c" : "#475569", borderRadius: "20px", padding: "5px 12px", textTransform: "capitalize" }}>
                     {currentTopic.sentiment === "positive" ? "↑" : currentTopic.sentiment === "negative" ? "↓" : "→"} {currentTopic.sentiment} sentiment
                   </span>
                 )}
@@ -966,36 +765,17 @@ export default function Home() {
                     <span style={{ fontSize: "12px", fontWeight: 700, color: theme.text }}>{currentTopic.intensity}/10</span>
                   </div>
                 )}
-                {currentTopic.in_govt_agenda && (
-                  <span style={{ fontSize: "11px", background: "#dcfce7", color: "#15803d", border: "1px solid #86efac", borderRadius: "20px", padding: "4px 10px", fontWeight: 600 }}>{t.govtBadge}</span>
-                )}
+                {currentTopic.in_govt_agenda && <span style={{ fontSize: "11px", background: "#dcfce7", color: "#15803d", border: "1px solid #86efac", borderRadius: "20px", padding: "4px 10px", fontWeight: 600 }}>{t.govtBadge}</span>}
               </div>
             )}
-
-            {/* Topic switcher pills */}
             {!loading && pulse?.top_topics && (
               <div>
                 <span style={{ fontSize: "10px", color: theme.textMuted, letterSpacing: "0.12em", textTransform: "uppercase", display: "block", marginBottom: "10px" }}>{t.trending}:</span>
                 <div style={{ display: "flex", gap: "7px", flexWrap: "wrap" }}>
                   {pulse.top_topics.map((tp, i) => (
                     <button key={i} onClick={() => { setActiveTopicIndex(i); setHeroPulse(true); setTimeout(() => setHeroPulse(false), 700); }}
-                      style={{
-                        display: "flex", alignItems: "center", gap: "6px",
-                        padding: "7px 14px",
-                        borderRadius: "30px",
-                        border: `1.5px solid ${i === activeTopicIndex ? "#008751" : theme.border}`,
-                        background: i === activeTopicIndex ? "#dcfce7" : theme.surface,
-                        cursor: "pointer",
-                        transition: "all 0.25s",
-                        fontSize: "12px",
-                        fontWeight: i === activeTopicIndex ? 700 : 400,
-                        color: i === activeTopicIndex ? "#15803d" : theme.textMuted,
-                        fontFamily: "'Source Serif 4', serif",
-                        boxShadow: i === activeTopicIndex ? "0 2px 8px rgba(0,135,81,0.15)" : "none",
-                      }}>
-                      {i === activeTopicIndex && (
-                        <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#008751", display: "inline-block", flexShrink: 0, animation: "pulseDot 1.5s infinite" }} />
-                      )}
+                      style={{ display: "flex", alignItems: "center", gap: "6px", padding: "7px 14px", borderRadius: "30px", border: `1.5px solid ${i === activeTopicIndex ? "#008751" : theme.border}`, background: i === activeTopicIndex ? "#dcfce7" : theme.surface, cursor: "pointer", transition: "all 0.25s", fontSize: "12px", fontWeight: i === activeTopicIndex ? 700 : 400, color: i === activeTopicIndex ? "#15803d" : theme.textMuted, fontFamily: "'Source Serif 4', serif", boxShadow: i === activeTopicIndex ? "0 2px 8px rgba(0,135,81,0.15)" : "none" }}>
+                      {i === activeTopicIndex && <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#008751", display: "inline-block", flexShrink: 0, animation: "pulseDot 1.5s infinite" }} />}
                       <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "11px", fontWeight: 800, opacity: 0.4, marginRight: "1px" }}>{String(i + 1).padStart(2, "0")}</span>
                       {tp.name.split(" ").slice(0, 3).join(" ")}
                     </button>
@@ -1005,24 +785,18 @@ export default function Home() {
             )}
           </div>
 
-          {/* Bottom descriptor */}
           <div style={{ marginTop: "32px", paddingTop: "24px", borderTop: `1px solid ${theme.border}`, display: "flex", alignItems: "center", gap: "16px", flexWrap: "wrap" }}>
             <span style={{ fontSize: "12px", color: theme.textMuted }}>{t.heroDesc}</span>
             <span style={{ fontSize: "12px", color: theme.textMuted }}>·</span>
             <span style={{ fontSize: "12px", color: theme.textMuted }}>{t.autoRefresh}</span>
-            {lastUpdated && (
-              <>
-                <span style={{ fontSize: "12px", color: theme.textMuted }}>·</span>
-                <span style={{ fontSize: "12px", color: "#008751", fontWeight: 600 }}>{t.updated} {formatTime(lastUpdated)}</span>
-              </>
-            )}
+            {lastUpdated && <><span style={{ fontSize: "12px", color: theme.textMuted }}>·</span><span style={{ fontSize: "12px", color: "#008751", fontWeight: 600 }}>{t.updated} {formatTime(lastUpdated)}</span></>}
           </div>
         </div>
       </section>
 
-      {/* ── TABS ── */}
+      {/* TABS */}
       <div style={{ background: theme.surface, borderBottom: `1px solid ${theme.border}`, padding: "0 24px", position: "sticky", top: "62px", zIndex: 90 }}>
-        <div style={{ maxWidth: "1280px", margin: "0 auto", display: "flex", gap: "0" }}>
+        <div style={{ maxWidth: "1280px", margin: "0 auto", display: "flex" }}>
           {tabs.map(tab => (
             <button key={tab.id} onClick={() => setActiveTab(tab.id)}
               style={{ padding: "14px 22px", border: "none", borderBottom: activeTab === tab.id ? "2px solid #008751" : "2px solid transparent", background: "transparent", cursor: "pointer", fontFamily: "'Playfair Display', serif", fontWeight: activeTab === tab.id ? 700 : 400, fontSize: "14px", color: activeTab === tab.id ? "#008751" : theme.textMuted, transition: "all 0.2s", letterSpacing: "-0.01em" }}>
@@ -1032,21 +806,16 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ── MAIN ── */}
+      {/* MAIN */}
       <main style={{ maxWidth: "1280px", margin: "0 auto", padding: "40px 24px 100px" }}>
 
-        {/* ── NATIONAL PULSE ── */}
         {activeTab === "pulse" && (
           <div>
             {loading ? (
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(360px, 1fr))", gap: "20px" }}>
-                {[1, 2, 3, 4, 5].map(i => (
+                {[1,2,3,4,5].map(i => (
                   <div key={i} style={{ background: theme.cardBg, border: `1px solid ${theme.cardBorder}`, borderRadius: "16px", padding: "24px", height: "280px" }}>
-                    <Skeleton h={14} w="35%" mb={16} dark={darkMode} />
-                    <Skeleton h={26} w="80%" mb={12} dark={darkMode} />
-                    <Skeleton h={14} w="100%" mb={8} dark={darkMode} />
-                    <Skeleton h={14} w="90%" mb={8} dark={darkMode} />
-                    <Skeleton h={14} w="70%" dark={darkMode} />
+                    <Skeleton h={14} w="35%" mb={16} dark={darkMode} /><Skeleton h={26} w="80%" mb={12} dark={darkMode} /><Skeleton h={14} w="100%" mb={8} dark={darkMode} /><Skeleton h={14} w="90%" mb={8} dark={darkMode} /><Skeleton h={14} w="70%" dark={darkMode} />
                   </div>
                 ))}
               </div>
@@ -1059,13 +828,8 @@ export default function Home() {
               <>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "24px" }}>
                   <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "14px", fontWeight: 700, color: theme.textMuted, letterSpacing: "0.12em", textTransform: "uppercase", margin: 0 }}>{t.topicsLabel}</h2>
-                  {pulse.engine_used && (
-                    <span style={{ fontSize: "10px", color: theme.textMuted, background: theme.surface2, border: `1px solid ${theme.border}`, borderRadius: "4px", padding: "4px 10px", letterSpacing: "0.04em" }}>
-                      {pulse.engine_used} · {Math.round((pulse.analysis_confidence || 0) * 100)}% confidence
-                    </span>
-                  )}
+                  {pulse.engine_used && <span style={{ fontSize: "10px", color: theme.textMuted, background: theme.surface2, border: `1px solid ${theme.border}`, borderRadius: "4px", padding: "4px 10px", letterSpacing: "0.04em" }}>{pulse.engine_used} · {Math.round((pulse.analysis_confidence || 0) * 100)}% confidence</span>}
                 </div>
-
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(360px, 1fr))", gap: "20px", marginBottom: "48px" }}>
                   {pulse.top_topics?.map((topic, i) => (
                     <div key={i} className="topic-card" style={{ animationDelay: `${i * 100}ms` }}>
@@ -1073,8 +837,6 @@ export default function Home() {
                     </div>
                   ))}
                 </div>
-
-                {/* Stats bar */}
                 <div style={{ background: theme.cardBg, border: `1px solid ${theme.cardBorder}`, borderRadius: "16px", padding: "28px 32px", display: "flex", gap: "40px", flexWrap: "wrap", marginBottom: "48px" }}>
                   {[
                     { label: "SIGNALS", value: pulse.total_articles_analyzed },
@@ -1090,14 +852,12 @@ export default function Home() {
                     </div>
                   ))}
                 </div>
-
                 <NigeriaMap t={t} />
               </>
             )}
           </div>
         )}
 
-        {/* ── GLOBAL IMPACT ── */}
         {activeTab === "foreign" && (
           <div>
             <div style={{ marginBottom: "28px" }}>
@@ -1106,7 +866,7 @@ export default function Home() {
             </div>
             {alertsLoading ? (
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))", gap: "16px" }}>
-                {[1, 2, 3, 4].map(i => <div key={i} style={{ height: "180px", background: theme.cardBg, borderRadius: "14px", border: `1px solid ${theme.cardBorder}` }}><Skeleton h="100%" dark={darkMode} /></div>)}
+                {[1,2,3,4].map(i => <div key={i} style={{ height: "180px", background: theme.cardBg, borderRadius: "14px", border: `1px solid ${theme.cardBorder}` }}><Skeleton h="100%" dark={darkMode} /></div>)}
               </div>
             ) : foreignAlerts.length === 0 ? (
               <div style={{ textAlign: "center", padding: "80px 20px" }}>
@@ -1117,13 +877,9 @@ export default function Home() {
               <>
                 <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginBottom: "24px" }}>
                   {[...new Set(foreignAlerts.map(a => a.impact_sector))].map(sector => {
-                    const sc = { oil: "#ea580c", forex: "#d97706", diaspora: "#7c3aed", trade: "#2563eb", security: "#dc2626", food: "#16a34a", other: "#6b7280" };
-                    const bg = { oil: "#fff7ed", forex: "#fef3c7", diaspora: "#f5f3ff", trade: "#eff6ff", security: "#fee2e2", food: "#dcfce7", other: "#f9fafb" };
-                    return (
-                      <span key={sector} style={{ fontSize: "11px", background: bg[sector] || "#f9fafb", color: sc[sector] || "#6b7280", border: `1px solid ${sc[sector] || "#6b7280"}30`, borderRadius: "20px", padding: "5px 14px", fontWeight: 700 }}>
-                        {(sector || "").toUpperCase()} ({foreignAlerts.filter(a => a.impact_sector === sector).length})
-                      </span>
-                    );
+                    const sc = { oil:"#ea580c", forex:"#d97706", diaspora:"#7c3aed", trade:"#2563eb", security:"#dc2626", food:"#16a34a", other:"#6b7280" };
+                    const bg = { oil:"#fff7ed", forex:"#fef3c7", diaspora:"#f5f3ff", trade:"#eff6ff", security:"#fee2e2", food:"#dcfce7", other:"#f9fafb" };
+                    return <span key={sector} style={{ fontSize: "11px", background: bg[sector]||"#f9fafb", color: sc[sector]||"#6b7280", border: `1px solid ${sc[sector]||"#6b7280"}30`, borderRadius: "20px", padding: "5px 14px", fontWeight: 700 }}>{(sector||"").toUpperCase()} ({foreignAlerts.filter(a=>a.impact_sector===sector).length})</span>;
                   })}
                 </div>
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))", gap: "16px" }}>
@@ -1134,7 +890,6 @@ export default function Home() {
           </div>
         )}
 
-        {/* ── SOCIAL SIGNALS ── */}
         {activeTab === "social" && (
           <div>
             <div style={{ marginBottom: "28px" }}>
@@ -1143,7 +898,7 @@ export default function Home() {
             </div>
             {socialLoading ? (
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: "12px" }}>
-                {[1, 2, 3, 4, 5, 6].map(i => <div key={i} style={{ height: "110px", background: theme.cardBg, borderRadius: "12px", border: `1px solid ${theme.cardBorder}` }}><Skeleton h="100%" dark={darkMode} /></div>)}
+                {[1,2,3,4,5,6].map(i => <div key={i} style={{ height: "110px", background: theme.cardBg, borderRadius: "12px", border: `1px solid ${theme.cardBorder}` }}><Skeleton h="100%" dark={darkMode} /></div>)}
               </div>
             ) : socialSignals.length === 0 ? (
               <div style={{ textAlign: "center", padding: "80px 20px" }}>
@@ -1153,72 +908,57 @@ export default function Home() {
             ) : (
               <>
                 <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginBottom: "36px" }}>
-                  {[
-                    { label: "Reddit", color: "#ea580c", count: reddit.length },
-                    { label: "YouTube", color: "#dc2626", count: youtube.length },
-                    { label: "Comments", color: "#f97316", count: comments.length },
-                    { label: "Trends", color: "#d97706", count: trends.length },
-                    { label: "Signals", color: "#16a34a", count: signals.length },
-                  ].filter(x => x.count > 0).map(({ label, color, count }) => (
-                    <div key={label} style={{ display: "flex", alignItems: "center", gap: "7px", background: theme.cardBg, border: `1px solid ${theme.cardBorder}`, borderRadius: "10px", padding: "8px 16px" }}>
-                      <div style={{ width: "7px", height: "7px", borderRadius: "50%", background: color }} />
-                      <span style={{ fontSize: "12px", color: theme.textMuted }}>{label}</span>
-                      <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "16px", fontWeight: 700, color: theme.text }}>{count}</span>
+                  {[{ label:"Reddit",color:"#ea580c",count:reddit.length },{ label:"YouTube",color:"#dc2626",count:youtube.length },{ label:"Comments",color:"#f97316",count:comments.length },{ label:"Trends",color:"#d97706",count:trends.length },{ label:"Signals",color:"#16a34a",count:signals.length }].filter(x=>x.count>0).map(({label,color,count})=>(
+                    <div key={label} style={{ display:"flex",alignItems:"center",gap:"7px",background:theme.cardBg,border:`1px solid ${theme.cardBorder}`,borderRadius:"10px",padding:"8px 16px" }}>
+                      <div style={{ width:"7px",height:"7px",borderRadius:"50%",background:color }} />
+                      <span style={{ fontSize:"12px",color:theme.textMuted }}>{label}</span>
+                      <span style={{ fontFamily:"'Playfair Display', serif",fontSize:"16px",fontWeight:700,color:theme.text }}>{count}</span>
                     </div>
                   ))}
                 </div>
-
                 {[
-                  { data: reddit, label: "REDDIT NIGERIA", color: "#ea580c", sub: "posts" },
-                  { data: trends, label: "GOOGLE TRENDS NIGERIA", color: "#d97706", sub: "searches", type: "trends" },
-                  { data: youtube, label: "YOUTUBE — NIGERIAN CHANNELS", color: "#dc2626", sub: "videos" },
-                  { data: comments, label: "YOUTUBE COMMENTS", color: "#f97316", sub: "comments" },
-                  { data: signals, label: "EDITORIAL SIGNALS", color: "#16a34a", sub: "articles", type: "list" },
-                ].filter(s => s.data.length > 0).map(({ data, label, color, sub, type }) => (
-                  <div key={label} style={{ marginBottom: "44px" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "16px" }}>
-                      <div style={{ width: "3px", height: "16px", background: color, borderRadius: "2px" }} />
-                      <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "13px", fontWeight: 700, color, letterSpacing: "0.1em", margin: 0 }}>{label}</h3>
-                      <span style={{ fontSize: "12px", color: theme.textMuted }}>{data.length} {sub}</span>
+                  { data:reddit, label:"REDDIT NIGERIA", color:"#ea580c", sub:"posts" },
+                  { data:trends, label:"GOOGLE TRENDS NIGERIA", color:"#d97706", sub:"searches", type:"trends" },
+                  { data:youtube, label:"YOUTUBE — NIGERIAN CHANNELS", color:"#dc2626", sub:"videos" },
+                  { data:comments, label:"YOUTUBE COMMENTS", color:"#f97316", sub:"comments" },
+                  { data:signals, label:"EDITORIAL SIGNALS", color:"#16a34a", sub:"articles", type:"list" },
+                ].filter(s=>s.data.length>0).map(({data,label,color,sub,type})=>(
+                  <div key={label} style={{ marginBottom:"44px" }}>
+                    <div style={{ display:"flex",alignItems:"center",gap:"8px",marginBottom:"16px" }}>
+                      <div style={{ width:"3px",height:"16px",background:color,borderRadius:"2px" }} />
+                      <h3 style={{ fontFamily:"'Playfair Display', serif",fontSize:"13px",fontWeight:700,color,letterSpacing:"0.1em",margin:0 }}>{label}</h3>
+                      <span style={{ fontSize:"12px",color:theme.textMuted }}>{data.length} {sub}</span>
                     </div>
-                    {type === "trends" ? (
-                      <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
-                        {data.map((trend, i) => (
-                          <a key={i} href={trend.link} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
-                            <div style={{ display: "flex", alignItems: "center", gap: "10px", background: theme.cardBg, border: `1px solid ${theme.cardBorder}`, borderRadius: "8px", padding: "9px 16px", transition: "box-shadow 0.2s" }}
-                              onMouseEnter={e => e.currentTarget.style.boxShadow = "0 2px 10px rgba(0,0,0,0.07)"}
-                              onMouseLeave={e => e.currentTarget.style.boxShadow = "none"}
-                            >
-                              <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "14px", fontWeight: 700, color: "#d97706" }}>{String(i + 1).padStart(2, "0")}</span>
-                              <span style={{ fontSize: "13px", color: theme.text }}>{trend.title}</span>
+                    {type==="trends" ? (
+                      <div style={{ display:"flex",flexWrap:"wrap",gap:"8px" }}>
+                        {data.map((trend,i)=>(
+                          <a key={i} href={trend.link} target="_blank" rel="noopener noreferrer" style={{ textDecoration:"none" }}>
+                            <div style={{ display:"flex",alignItems:"center",gap:"10px",background:theme.cardBg,border:`1px solid ${theme.cardBorder}`,borderRadius:"8px",padding:"9px 16px",transition:"box-shadow 0.2s" }} onMouseEnter={e=>e.currentTarget.style.boxShadow="0 2px 10px rgba(0,0,0,0.07)"} onMouseLeave={e=>e.currentTarget.style.boxShadow="none"}>
+                              <span style={{ fontFamily:"'Playfair Display', serif",fontSize:"14px",fontWeight:700,color:"#d97706" }}>{String(i+1).padStart(2,"0")}</span>
+                              <span style={{ fontSize:"13px",color:theme.text }}>{trend.title}</span>
                             </div>
                           </a>
                         ))}
                       </div>
-                    ) : type === "list" ? (
-                      <div style={{ background: theme.cardBg, border: `1px solid ${theme.cardBorder}`, borderRadius: "12px", overflow: "hidden" }}>
-                        {data.slice(0, 14).map((item, i) => (
-                          <a key={i} href={item.link} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
-                            <div style={{ padding: "13px 18px", borderBottom: i < 13 ? `1px solid ${theme.border}` : "none", transition: "background 0.15s, padding-left 0.15s" }}
-                              onMouseEnter={e => { e.currentTarget.style.background = theme.surface2; e.currentTarget.style.paddingLeft = "24px"; }}
-                              onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.paddingLeft = "18px"; }}
-                            >
-                              <div style={{ display: "flex", justifyContent: "space-between", gap: "12px" }}>
-                                <div style={{ flex: 1 }}>
-                                  <span style={{ fontSize: "10px", color: "#16a34a", fontWeight: 700, marginRight: "8px", letterSpacing: "0.04em" }}>{item.source}</span>
-                                  <p style={{ fontSize: "13px", color: theme.text, lineHeight: 1.4, margin: "3px 0 0" }}>{item.title}</p>
+                    ) : type==="list" ? (
+                      <div style={{ background:theme.cardBg,border:`1px solid ${theme.cardBorder}`,borderRadius:"12px",overflow:"hidden" }}>
+                        {data.slice(0,14).map((item,i)=>(
+                          <a key={i} href={item.link} target="_blank" rel="noopener noreferrer" style={{ textDecoration:"none" }}>
+                            <div style={{ padding:"13px 18px",borderBottom:i<13?`1px solid ${theme.border}`:"none",transition:"background 0.15s, padding-left 0.15s" }} onMouseEnter={e=>{e.currentTarget.style.background=theme.surface2;e.currentTarget.style.paddingLeft="24px";}} onMouseLeave={e=>{e.currentTarget.style.background="transparent";e.currentTarget.style.paddingLeft="18px";}}>
+                              <div style={{ display:"flex",justifyContent:"space-between",gap:"12px" }}>
+                                <div style={{ flex:1 }}>
+                                  <span style={{ fontSize:"10px",color:"#16a34a",fontWeight:700,marginRight:"8px",letterSpacing:"0.04em" }}>{item.source}</span>
+                                  <p style={{ fontSize:"13px",color:theme.text,lineHeight:1.4,margin:"3px 0 0" }}>{item.title}</p>
                                 </div>
-                                <span style={{ fontSize: "10px", color: theme.textMuted, whiteSpace: "nowrap", marginTop: "2px" }}>{timeAgo(item.scraped_at)}</span>
+                                <span style={{ fontSize:"10px",color:theme.textMuted,whiteSpace:"nowrap",marginTop:"2px" }}>{timeAgo(item.scraped_at)}</span>
                               </div>
                             </div>
                           </a>
                         ))}
                       </div>
                     ) : (
-                      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(290px, 1fr))", gap: "10px" }}>
-                        {data.slice(0, 9).map((item, i) => (
-                          <SocialCard key={i} item={{ ...item, source: (item.source || "").replace("YouTube — ", "") }} accentColor={color} />
-                        ))}
+                      <div style={{ display:"grid",gridTemplateColumns:"repeat(auto-fill, minmax(290px, 1fr))",gap:"10px" }}>
+                        {data.slice(0,9).map((item,i)=><SocialCard key={i} item={{...item,source:(item.source||"").replace("YouTube — ","")}} accentColor={color} />)}
                       </div>
                     )}
                   </div>
@@ -1229,13 +969,12 @@ export default function Home() {
         )}
       </main>
 
-      {/* ── SUBSCRIBE ── */}
+      {/* SUBSCRIBE */}
       <section style={{ borderTop: `1px solid ${theme.border}`, padding: "72px 24px", background: theme.surface }}>
         <div style={{ maxWidth: "560px", margin: "0 auto", textAlign: "center" }}>
           <p style={{ fontSize: "11px", color: "#008751", letterSpacing: "0.2em", fontWeight: 700, marginBottom: "14px", textTransform: "uppercase" }}>{t.stayInformed}</p>
           <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "30px", fontWeight: 800, color: theme.text, marginBottom: "14px", letterSpacing: "-0.01em", lineHeight: 1.2 }}>{t.subscribeTitle}</h3>
           <p style={{ fontSize: "15px", color: theme.textMuted, marginBottom: "36px", lineHeight: 1.7 }}>{t.subscribeDesc}</p>
-
           {subscribeSuccess ? (
             <div style={{ background: "#dcfce7", border: "1px solid #86efac", borderRadius: "16px", padding: "32px" }}>
               <p style={{ fontFamily: "'Playfair Display', serif", fontSize: "20px", fontWeight: 700, color: "#15803d", margin: "0 0 8px" }}>{t.subscribed}</p>
@@ -1244,31 +983,29 @@ export default function Home() {
           ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: "10px", textAlign: "left" }}>
               {[
-                { type: "text", ph: t.namePlaceholder, val: subscribeName, set: setSubscribeName },
-                { type: "email", ph: t.emailPlaceholder, val: subscribeEmail, set: setSubscribeEmail },
-                { type: "tel", ph: t.whatsappPlaceholder, val: subscribeWhatsapp, set: setSubscribeWhatsapp },
-              ].map(({ type, ph, val, set }) => (
-                <input key={type} type={type} placeholder={ph} value={val} onChange={e => set(e.target.value)}
-                  style={{ width: "100%", padding: "14px 16px", background: theme.inputBg, border: `1px solid ${theme.inputBorder}`, borderRadius: "10px", color: theme.inputColor, fontSize: "14px", fontFamily: "'Source Serif 4', serif" }}
-                  onFocus={e => e.target.style.borderColor = "#008751"}
-                  onBlur={e => e.target.style.borderColor = theme.inputBorder}
+                { type:"text", ph:t.namePlaceholder, val:subscribeName, set:setSubscribeName },
+                { type:"email", ph:t.emailPlaceholder, val:subscribeEmail, set:setSubscribeEmail },
+                { type:"tel", ph:t.whatsappPlaceholder, val:subscribeWhatsapp, set:setSubscribeWhatsapp },
+              ].map(({type,ph,val,set})=>(
+                <input key={type} type={type} placeholder={ph} value={val} onChange={e=>set(e.target.value)}
+                  style={{ width:"100%",padding:"14px 16px",background:theme.inputBg,border:`1px solid ${theme.inputBorder}`,borderRadius:"10px",color:theme.inputColor,fontSize:"14px",fontFamily:"'Source Serif 4', serif" }}
+                  onFocus={e=>e.target.style.borderColor="#008751"}
+                  onBlur={e=>e.target.style.borderColor=theme.inputBorder}
                 />
               ))}
-              {subscribeError && <p style={{ fontSize: "13px", color: "#dc2626", margin: 0 }}>{subscribeError}</p>}
+              {subscribeError && <p style={{ fontSize:"13px",color:"#dc2626",margin:0 }}>{subscribeError}</p>}
               <button onClick={handleSubscribe} disabled={subscribeLoading}
-                style={{ width: "100%", padding: "15px", background: subscribeLoading ? "#d1d5db" : "#008751", color: "#fff", border: "none", borderRadius: "10px", fontSize: "15px", fontFamily: "'Playfair Display', serif", fontWeight: 700, cursor: subscribeLoading ? "not-allowed" : "pointer", letterSpacing: "0.04em", transition: "background 0.2s" }}
-                onMouseEnter={e => { if (!subscribeLoading) e.currentTarget.style.background = "#006b41"; }}
-                onMouseLeave={e => { if (!subscribeLoading) e.currentTarget.style.background = "#008751"; }}
-              >
-                {subscribeLoading ? t.subscribing : t.subscribeCTA}
-              </button>
-              <p style={{ fontSize: "12px", color: theme.textMuted, textAlign: "center" }}>{t.noSpam}</p>
+                style={{ width:"100%",padding:"15px",background:subscribeLoading?"#d1d5db":"#008751",color:"#fff",border:"none",borderRadius:"10px",fontSize:"15px",fontFamily:"'Playfair Display', serif",fontWeight:700,cursor:subscribeLoading?"not-allowed":"pointer",letterSpacing:"0.04em",transition:"background 0.2s" }}
+                onMouseEnter={e=>{if(!subscribeLoading)e.currentTarget.style.background="#006b41";}}
+                onMouseLeave={e=>{if(!subscribeLoading)e.currentTarget.style.background="#008751";}}
+              >{subscribeLoading ? t.subscribing : t.subscribeCTA}</button>
+              <p style={{ fontSize:"12px",color:theme.textMuted,textAlign:"center" }}>{t.noSpam}</p>
             </div>
           )}
         </div>
       </section>
 
-      {/* ── FOOTER ── */}
+      {/* FOOTER */}
       <footer style={{ borderTop: `1px solid ${theme.border}`, background: theme.bg, padding: "36px 24px" }}>
         <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "24px", marginBottom: "28px" }}>
@@ -1279,60 +1016,37 @@ export default function Home() {
                 <p style={{ fontSize: "11px", color: theme.textMuted, margin: 0 }}>{t.footerBuilt}</p>
               </div>
             </div>
-            {/* Social media links — footer only (left sidebar removed) */}
             <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
               {[
-                { icon: "in", label: "LinkedIn", href: "https://linkedin.com", color: "#0077b5" },
-                { icon: "wa", label: "WhatsApp", href: "https://whatsapp.com", color: "#25d366" },
-                { icon: "fb", label: "Facebook", href: "https://facebook.com", color: "#1877f2" },
-                { icon: "x", label: "X", href: "https://twitter.com", color: "#111827" },
-                { icon: "ig", label: "Instagram", href: "https://instagram.com", color: "#e1306c" },
-              ].map(({ icon, label, href, color }) => (
+                { icon:"in", label:"LinkedIn",  href:"https://linkedin.com",  color:"#0077b5" },
+                { icon:"wa", label:"WhatsApp",  href:"https://whatsapp.com",  color:"#25d366" },
+                { icon:"fb", label:"Facebook",  href:"https://facebook.com",  color:"#1877f2" },
+                { icon:"x",  label:"X",         href:"https://twitter.com",   color:"#111827" },
+                { icon:"ig", label:"Instagram", href:"https://instagram.com", color:"#e1306c" },
+              ].map(({icon,label,href,color})=>(
                 <a key={icon} href={href} target="_blank" rel="noopener noreferrer"
-                  style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "36px", height: "36px", borderRadius: "50%", background: theme.surface2, border: `1px solid ${theme.border}`, textDecoration: "none", transition: "background 0.2s, border-color 0.2s", fontSize: "13px", fontWeight: 700, color: theme.textMuted }}
-                  onMouseEnter={e => { e.currentTarget.style.background = color + "15"; e.currentTarget.style.borderColor = color + "50"; e.currentTarget.style.color = color; }}
-                  onMouseLeave={e => { e.currentTarget.style.background = theme.surface2; e.currentTarget.style.borderColor = theme.border; e.currentTarget.style.color = theme.textMuted; }}
+                  style={{ display:"flex",alignItems:"center",justifyContent:"center",width:"36px",height:"36px",borderRadius:"50%",background:theme.surface2,border:`1px solid ${theme.border}`,textDecoration:"none",transition:"background 0.2s, border-color 0.2s",fontSize:"13px",fontWeight:700,color:theme.textMuted }}
+                  onMouseEnter={e=>{e.currentTarget.style.background=color+"15";e.currentTarget.style.borderColor=color+"50";e.currentTarget.style.color=color;}}
+                  onMouseLeave={e=>{e.currentTarget.style.background=theme.surface2;e.currentTarget.style.borderColor=theme.border;e.currentTarget.style.color=theme.textMuted;}}
                   title={label}
-                >
-                  {icon === "in" ? "in" : icon === "wa" ? "W" : icon === "fb" ? "f" : icon === "x" ? "X" : "ig"}
-                </a>
+                >{icon==="in"?"in":icon==="wa"?"W":icon==="fb"?"f":icon==="x"?"X":"ig"}</a>
               ))}
             </div>
           </div>
-          <div style={{ borderTop: `1px solid ${theme.border}`, paddingTop: "20px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "12px" }}>
-            <p style={{ fontSize: "12px", color: theme.textMuted }}>© 2026 Nigeria Pulse · All rights reserved</p>
-            <p style={{ fontSize: "12px", color: theme.textMuted }}>Auto-refreshes every 5 min · 23+ sources · Powered by AI</p>
+          <div style={{ borderTop:`1px solid ${theme.border}`,paddingTop:"20px",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:"12px" }}>
+            <p style={{ fontSize:"12px",color:theme.textMuted }}>© 2026 Nigeria Pulse · All rights reserved</p>
+            <p style={{ fontSize:"12px",color:theme.textMuted }}>Auto-refreshes every 5 min · 23+ sources · Powered by AI</p>
           </div>
         </div>
       </footer>
 
-      {/* ── AI CHAT WIDGET (now includes social sharing) ── */}
       <AIChatWidget t={t} isOpen={chatOpen} onClose={() => setChatOpen(false)} pulse={pulse} />
 
-      {/* ── FLOATING AI CHAT BUTTON ── */}
       <button onClick={() => setChatOpen(!chatOpen)}
-        style={{
-          position: "fixed", bottom: "24px", right: "24px",
-          width: "56px", height: "56px", borderRadius: "50%",
-          background: chatOpen ? "#dc2626" : "#008751",
-          color: "#fff", border: "none", cursor: "pointer",
-          fontSize: "15px", fontWeight: 700,
-          boxShadow: chatOpen
-            ? "0 4px 20px rgba(220,38,38,0.4)"
-            : "0 4px 20px rgba(0,135,81,0.4)",
-          zIndex: 999, display: "flex", alignItems: "center", justifyContent: "center",
-          transition: "background 0.2s, transform 0.2s, box-shadow 0.2s",
-          fontFamily: "'Playfair Display', serif",
-        }}
-        onMouseEnter={e => e.currentTarget.style.transform = "scale(1.1)"}
-        onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
-      >
-        {chatOpen ? "×" : "AI"}
-      </button>
-
-      {/* NOTE: Left social sidebar has been removed.
-          Social links are now in the footer only.
-          Social sharing is inside the AI chat widget. */}
+        style={{ position:"fixed",bottom:"24px",right:"24px",width:"56px",height:"56px",borderRadius:"50%",background:chatOpen?"#dc2626":"#008751",color:"#fff",border:"none",cursor:"pointer",fontSize:"15px",fontWeight:700,boxShadow:chatOpen?"0 4px 20px rgba(220,38,38,0.4)":"0 4px 20px rgba(0,135,81,0.4)",zIndex:999,display:"flex",alignItems:"center",justifyContent:"center",transition:"background 0.2s, transform 0.2s, box-shadow 0.2s",fontFamily:"'Playfair Display', serif" }}
+        onMouseEnter={e=>e.currentTarget.style.transform="scale(1.1)"}
+        onMouseLeave={e=>e.currentTarget.style.transform="scale(1)"}
+      >{chatOpen ? "×" : "AI"}</button>
     </div>
   );
 }
