@@ -218,8 +218,7 @@ function TopicCard({ topic, index, isActive, t, reactions, onReact, onDetailClic
   const accentColors = ["#008751", "#2563eb", "#dc2626", "#d97706", "#7c3aed"];
   const color = accentColors[index] || "#6b7280";
   return (
-    <div
-      onClick={onDetailClick}
+    <div onClick={onDetailClick}
       style={{ background: "#fff", border: `1px solid ${isActive ? color + "40" : "#e5e7eb"}`, borderRadius: "16px", overflow: "hidden", transition: "box-shadow 0.25s, transform 0.25s", boxShadow: isActive ? `0 6px 24px ${color}18` : "none", display: "flex", flexDirection: "column", cursor: "pointer" }}
       onMouseEnter={e => { e.currentTarget.style.boxShadow = `0 10px 36px ${color}18`; e.currentTarget.style.transform = "translateY(-3px)"; }}
       onMouseLeave={e => { e.currentTarget.style.boxShadow = isActive ? `0 6px 24px ${color}18` : "none"; e.currentTarget.style.transform = "translateY(0)"; }}
@@ -227,7 +226,7 @@ function TopicCard({ topic, index, isActive, t, reactions, onReact, onDetailClic
       <div style={{ height: "5px", background: color }} />
       <div style={{ padding: "20px 20px 18px", flex: 1, display: "flex", flexDirection: "column" }}>
         <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: "12px" }}>
-          <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "36px", fontWeight: 800, color: "#f3f4f6", lineHeight: 1, letterSpacing: "-0.03em" }}>{String(index + 1).padStart(2, "0")}</span>
+          <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "36px", fontWeight: 800, color: "#f3f4f6", lineHeight: 1 }}>{String(index + 1).padStart(2, "0")}</span>
           <div style={{ display: "flex", gap: "4px", flexWrap: "wrap", justifyContent: "flex-end" }}>
             {topic.in_govt_agenda && <span style={{ fontSize: "9px", background: "#dcfce7", color: "#15803d", border: "1px solid #86efac", borderRadius: "20px", padding: "3px 8px", fontWeight: 600 }}>{t.govtBadge}</span>}
             {topic.foreign_impact && <span style={{ fontSize: "9px", background: "#fef3c7", color: "#92400e", border: "1px solid #fcd34d", borderRadius: "20px", padding: "3px 8px", fontWeight: 600 }}>{t.globalBadge}</span>}
@@ -278,7 +277,7 @@ function ForeignAlertCard({ alert }) {
   const color = sectorColors[alert.impact_sector] || "#6b7280";
   const bg = sectorBgs[alert.impact_sector] || "#f9fafb";
   return (
-    <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: "14px", overflow: "hidden" }}
+    <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: "14px", overflow: "hidden", transition: "box-shadow 0.2s, transform 0.2s" }}
       onMouseEnter={e => { e.currentTarget.style.boxShadow = "0 6px 24px rgba(0,0,0,0.08)"; e.currentTarget.style.transform = "translateY(-2px)"; }}
       onMouseLeave={e => { e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.transform = "translateY(0)"; }}
     >
@@ -389,29 +388,173 @@ function NigeriaMap({ t }) {
   );
 }
 
+// ─── SOCIAL SHARE SVG ICONS ──────────────────────────────────
+function WhatsAppIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  );
+}
+
+function XIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.856L1.96 2.25H8.18l4.259 5.633 5.804-5.633zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+    </svg>
+  );
+}
+
+function FacebookIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+    </svg>
+  );
+}
+
+function LinkedInIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+    </svg>
+  );
+}
+
+function TelegramIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+    </svg>
+  );
+}
+
+function CopyIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+    </svg>
+  );
+}
+
+// ─── FLOATING SOCIAL BAR ─────────────────────────────────────
+function FloatingSocialBar({ pulse }) {
+  const [copied, setCopied] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(null);
+
+  const getShareText = () => {
+    const topic = pulse?.top_topics?.[0];
+    return topic
+      ? `🇳🇬 Nigeria Pulse: "${topic.name}" is trending in Nigeria right now. ${topic.summary?.slice(0, 80)}… — https://www.nigeriapulse.site`
+      : "🇳🇬 Nigeria Pulse — Real-Time Nigerian News Intelligence. https://www.nigeriapulse.site";
+  };
+
+  const shareUrl = "https://www.nigeriapulse.site";
+
+  const socials = [
+    {
+      id: "whatsapp",
+      label: "WhatsApp",
+      bg: "#25d366",
+      icon: <WhatsAppIcon />,
+      href: () => `https://wa.me/?text=${encodeURIComponent(getShareText())}`,
+    },
+    {
+      id: "x",
+      label: "X / Twitter",
+      bg: "#000000",
+      icon: <XIcon />,
+      href: () => `https://twitter.com/intent/tweet?text=${encodeURIComponent(getShareText())}`,
+    },
+    {
+      id: "facebook",
+      label: "Facebook",
+      bg: "#1877f2",
+      icon: <FacebookIcon />,
+      href: () => `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
+    },
+    {
+      id: "linkedin",
+      label: "LinkedIn",
+      bg: "#0077b5",
+      icon: <LinkedInIcon />,
+      href: () => `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`,
+    },
+    {
+      id: "telegram",
+      label: "Telegram",
+      bg: "#2AABEE",
+      icon: <TelegramIcon />,
+      href: () => `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(getShareText())}`,
+    },
+    {
+      id: "copy",
+      label: copied ? "Copied!" : "Copy Link",
+      bg: copied ? "#008751" : "#6b7280",
+      icon: <CopyIcon />,
+      href: () => null,
+      action: () => {
+        navigator.clipboard?.writeText(shareUrl);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      },
+    },
+  ];
+
+  return (
+    <div style={{ position: "fixed", bottom: "90px", right: "24px", display: "flex", flexDirection: "column", gap: "8px", zIndex: 998, alignItems: "center" }}>
+      {socials.map(({ id, label, bg, icon, href, action }) => (
+        <div key={id} style={{ position: "relative" }}>
+          {/* Tooltip */}
+          {showTooltip === id && (
+            <div style={{ position: "absolute", right: "54px", top: "50%", transform: "translateY(-50%)", background: "#111827", color: "#fff", fontSize: "11px", fontWeight: 600, padding: "4px 10px", borderRadius: "6px", whiteSpace: "nowrap", pointerEvents: "none", fontFamily: "'Source Serif 4', serif" }}>
+              {label}
+              <div style={{ position: "absolute", right: "-4px", top: "50%", transform: "translateY(-50%)", width: "8px", height: "8px", background: "#111827", clipPath: "polygon(0 50%, 100% 0, 100% 100%)" }} />
+            </div>
+          )}
+          <a
+            href={href() || undefined}
+            target={href() ? "_blank" : undefined}
+            rel="noopener noreferrer"
+            onClick={action ? e => { e.preventDefault(); action(); } : undefined}
+            title={label}
+            onMouseEnter={() => setShowTooltip(id)}
+            onMouseLeave={() => setShowTooltip(null)}
+            style={{
+              width: "42px",
+              height: "42px",
+              borderRadius: "50%",
+              background: bg,
+              color: "#fff",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              textDecoration: "none",
+              boxShadow: "0 2px 10px rgba(0,0,0,0.2)",
+              transition: "transform 0.2s, box-shadow 0.2s",
+              cursor: "pointer",
+              flexShrink: 0,
+            }}
+            onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.15)"; e.currentTarget.style.boxShadow = "0 4px 16px rgba(0,0,0,0.3)"; setShowTooltip(id); }}
+            onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 2px 10px rgba(0,0,0,0.2)"; setShowTooltip(null); }}
+          >
+            {icon}
+          </a>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ─── AI CHAT WIDGET ──────────────────────────────────────────
 function AIChatWidget({ t, isOpen, onClose, pulse }) {
   const [messages, setMessages] = useState([{ role: "assistant", content: t.aiWelcome }]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [showShare, setShowShare] = useState(false);
   const endRef = useRef(null);
 
   useEffect(() => { endRef.current?.scrollIntoView({ behavior: "smooth" }); }, [messages]);
-
-  const getShareText = () => {
-    const lastAI = [...messages].reverse().find(m => m.role === "assistant");
-    return lastAI
-      ? `Nigeria Pulse AI: "${lastAI.content.slice(0, 120)}…" — nigeriapulse.com`
-      : "Check out Nigeria Pulse — Real-Time National Intelligence. nigeriapulse.com";
-  };
-
-  const shareLinks = [
-    { label: "WhatsApp", color: "#25d366", letter: "W", url: () => `https://wa.me/?text=${encodeURIComponent(getShareText())}` },
-    { label: "X / Twitter", color: "#000", letter: "X", url: () => `https://twitter.com/intent/tweet?text=${encodeURIComponent(getShareText())}` },
-    { label: "Facebook", color: "#1877f2", letter: "f", url: () => `https://www.facebook.com/sharer/sharer.php?u=https://nigeriapulse.com&quote=${encodeURIComponent(getShareText())}` },
-    { label: "LinkedIn", color: "#0077b5", letter: "in", url: () => `https://www.linkedin.com/sharing/share-offsite/?url=https://nigeriapulse.com` },
-    { label: "Copy link", color: "#6b7280", letter: "⧉", url: () => null, action: () => { navigator.clipboard?.writeText(getShareText()); setShowShare(false); } },
-  ];
 
   const send = async () => {
     if (!input.trim() || loading) return;
@@ -445,26 +588,13 @@ function AIChatWidget({ t, isOpen, onClose, pulse }) {
   };
 
   if (!isOpen) return null;
-
-  // On mobile, make the chat full-screen
-  const isMobileStyle = {
-    position: "fixed",
-    bottom: 0,
-    right: 0,
-    left: 0,
-    top: 0,
-    width: "100%",
-    maxHeight: "100%",
-    borderRadius: 0,
-  };
-
   return (
     <>
       <style>{`
         @media (min-width: 480px) {
           .chat-widget {
             bottom: 88px !important;
-            right: 24px !important;
+            right: 88px !important;
             left: auto !important;
             top: auto !important;
             width: 360px !important;
@@ -482,30 +612,8 @@ function AIChatWidget({ t, isOpen, onClose, pulse }) {
               <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "10px", margin: 0 }}>{t.aiSubtitle}</p>
             </div>
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-            <button onClick={() => setShowShare(s => !s)}
-              style={{ background: "rgba(255,255,255,0.15)", border: "none", borderRadius: "20px", padding: "5px 10px", color: "#fff", cursor: "pointer", fontSize: "11px", fontWeight: 600, display: "flex", alignItems: "center", gap: "4px" }}>
-              <span style={{ fontSize: "12px" }}>↗</span> <span className="share-label">{t.aiShare}</span>
-            </button>
-            <button onClick={onClose} style={{ background: "rgba(255,255,255,0.15)", border: "none", borderRadius: "50%", width: "28px", height: "28px", color: "#fff", cursor: "pointer", fontSize: "18px", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>×</button>
-          </div>
+          <button onClick={onClose} style={{ background: "rgba(255,255,255,0.15)", border: "none", borderRadius: "50%", width: "28px", height: "28px", color: "#fff", cursor: "pointer", fontSize: "18px", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>×</button>
         </div>
-
-        {showShare && (
-          <div style={{ background: "#f9fafb", borderBottom: "1px solid #e5e7eb", padding: "12px 16px", flexShrink: 0 }}>
-            <p style={{ fontSize: "11px", color: "#6b7280", fontWeight: 600, letterSpacing: "0.08em", marginBottom: "10px", textTransform: "uppercase" }}>Share Nigeria Pulse</p>
-            <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-              {shareLinks.map(({ label, color, letter, url, action }) => (
-                <a key={label} href={url() || undefined} target="_blank" rel="noopener noreferrer"
-                  onClick={action ? e => { e.preventDefault(); action(); } : undefined} title={label}
-                  style={{ width: "40px", height: "40px", borderRadius: "50%", background: "#fff", border: `1.5px solid ${color}30`, display: "flex", alignItems: "center", justifyContent: "center", textDecoration: "none", fontSize: "12px", fontWeight: 700, color, cursor: "pointer" }}
-                  onMouseEnter={e => { e.currentTarget.style.background = color; e.currentTarget.style.color = "#fff"; }}
-                  onMouseLeave={e => { e.currentTarget.style.background = "#fff"; e.currentTarget.style.color = color; }}
-                >{letter}</a>
-              ))}
-            </div>
-          </div>
-        )}
 
         <div style={{ flex: 1, overflowY: "auto", padding: "14px", display: "flex", flexDirection: "column", gap: "10px" }}>
           {messages.map((msg, i) => (
@@ -563,7 +671,6 @@ export default function Home() {
   const [subscribeSuccess, setSubscribeSuccess] = useState(false);
   const [subscribeError, setSubscribeError] = useState("");
   const [heroPulse, setHeroPulse] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const t = TRANSLATIONS[lang] || TRANSLATIONS.en;
 
@@ -682,40 +789,17 @@ export default function Home() {
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 2px; }
-
-        /* ── RESPONSIVE GRID ── */
-        .topics-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-          gap: 16px;
-        }
-        .alerts-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-          gap: 14px;
-        }
-        .social-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-          gap: 10px;
-        }
-        .stats-row {
-          display: flex;
-          gap: 20px;
-          flex-wrap: wrap;
-        }
-        .hero-stats {
-          display: flex;
-          gap: 6px;
-          flex-wrap: wrap;
-        }
-        .header-controls {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-        }
+        .topics-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+        .alerts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+        .social-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; }
+        .stats-row { display: flex; gap: 20px; flex-wrap: wrap; }
+        .hero-stats { display: flex; gap: 6px; flex-wrap: wrap; }
+        .header-controls { display: flex; align-items: center; gap: 8px; }
         .dark-toggle-label { display: inline; }
         .updated-label { display: inline; }
+
+        /* Hide social bar on mobile when chat is open */
+        .social-bar-hidden { display: none !important; }
 
         @media (max-width: 640px) {
           .topics-grid { grid-template-columns: 1fr; }
@@ -734,15 +818,12 @@ export default function Home() {
           .updated-label { display: none; }
           .hero-overline { font-size: 14px !important; }
           .stats-row { gap: 12px; }
-          .map-container { flex-direction: column; }
         }
-
         @media (max-width: 480px) {
           .header-inner { height: 54px !important; }
           .brand-tagline { display: none; }
           .hero-watermark { display: none; }
         }
-
         @media (min-width: 641px) and (max-width: 1024px) {
           .topics-grid { grid-template-columns: repeat(2, 1fr); }
           .alerts-grid { grid-template-columns: repeat(2, 1fr); }
@@ -753,7 +834,6 @@ export default function Home() {
       {/* HEADER */}
       <header style={{ position: "sticky", top: 0, background: theme.headerBg, backdropFilter: "blur(14px)", borderBottom: `1px solid ${theme.border}`, zIndex: 100, padding: "0 16px" }}>
         <div className="header-inner" style={{ maxWidth: "1280px", margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", height: "62px", gap: "8px" }}>
-          {/* Logo */}
           <div style={{ display: "flex", alignItems: "center", gap: "8px", flexShrink: 0 }}>
             <div style={{ width: "30px", height: "30px", borderRadius: "8px", background: "#008751", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
               <div style={{ width: "12px", height: "2px", background: "#fff", borderRadius: "1px" }} />
@@ -763,10 +843,7 @@ export default function Home() {
               <p className="brand-tagline" style={{ fontSize: "8px", color: theme.textMuted, letterSpacing: "0.12em", textTransform: "uppercase", margin: 0 }}>{t.tagline}</p>
             </div>
           </div>
-
-          {/* Controls */}
           <div className="header-controls" style={{ flexShrink: 0 }}>
-            {/* Language switcher */}
             <div style={{ display: "flex", background: theme.surface2, border: `1px solid ${theme.border}`, borderRadius: "20px", padding: "2px" }}>
               {langs.map(l => (
                 <button key={l.code} onClick={() => setLang(l.code)}
@@ -775,16 +852,11 @@ export default function Home() {
                 </button>
               ))}
             </div>
-
-            {/* Dark mode */}
             <button onClick={() => setDarkMode(!darkMode)}
               style={{ background: theme.surface2, border: `1px solid ${theme.border}`, borderRadius: "20px", padding: "6px 10px", cursor: "pointer", fontSize: "13px", color: theme.text, display: "flex", alignItems: "center", gap: "4px" }}>
               {darkMode ? "☀" : "◑"} <span className="dark-toggle-label" style={{ fontSize: "12px" }}>{darkMode ? "Light" : "Dark"}</span>
             </button>
-
-            {/* Updated time — hidden on small screens */}
             {lastUpdated && <span className="updated-label" style={{ fontSize: "10px", color: theme.textMuted, whiteSpace: "nowrap" }}>{t.updated} {formatTime(lastUpdated)}</span>}
-
             <LiveDot label={t.liveLabel} />
           </div>
         </div>
@@ -797,8 +869,6 @@ export default function Home() {
         <div className="hero-watermark" style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", fontFamily: "'Playfair Display', serif", fontSize: "clamp(60px, 18vw, 220px)", fontWeight: 800, color: darkMode ? "rgba(0,135,81,0.04)" : "rgba(0,135,81,0.05)", whiteSpace: "nowrap", pointerEvents: "none", userSelect: "none", letterSpacing: "-0.04em", lineHeight: 1 }}>NIGERIA</div>
         <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: "4px", background: "linear-gradient(180deg, #008751 0%, #00b86a 50%, #008751 100%)" }} />
         <div className="hero-padding" style={{ maxWidth: "1280px", margin: "0 auto", padding: "48px 24px 40px", position: "relative", zIndex: 1 }}>
-
-          {/* Top row */}
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "10px", marginBottom: "24px" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
               <div style={{ position: "relative", width: "12px", height: "12px", flexShrink: 0 }}>
@@ -822,7 +892,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Hero headline */}
           <div style={{ maxWidth: "820px" }}>
             {!loading && currentTopic && (
               <div style={{ display: "inline-flex", alignItems: "center", gap: "7px", marginBottom: "14px", flexWrap: "wrap" }}>
@@ -830,7 +899,6 @@ export default function Home() {
                 {currentTopic.category && <span style={{ fontSize: "10px", color: theme.textMuted, background: theme.surface2, border: `1px solid ${theme.border}`, borderRadius: "6px", padding: "3px 9px", letterSpacing: "0.06em", textTransform: "uppercase" }}>{currentTopic.category}</span>}
               </div>
             )}
-
             <h2 className="hero-title" style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(32px, 5.5vw, 72px)", fontWeight: 800, letterSpacing: "-0.03em", lineHeight: 1.05, color: theme.text, marginBottom: "16px", animation: heroPulse ? "heroFlash 0.6s ease" : "none" }}>
               {loading ? <span style={{ color: theme.textMuted, fontStyle: "italic" }}>Loading intelligence…</span>
                 : currentTopic?.name ? (
@@ -841,13 +909,11 @@ export default function Home() {
                   </>
                 ) : t.heroDefault}
             </h2>
-
             {!loading && currentTopic?.summary && (
               <p style={{ fontSize: "clamp(13px, 1.3vw, 16px)", color: theme.textMuted, lineHeight: 1.75, maxWidth: "580px", marginBottom: "20px", borderLeft: "3px solid rgba(0,135,81,0.4)", paddingLeft: "14px" }}>
                 {currentTopic.summary}
               </p>
             )}
-
             {!loading && currentTopic && (
               <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap", marginBottom: "20px" }}>
                 {currentTopic.sentiment && (
@@ -867,8 +933,6 @@ export default function Home() {
                 {currentTopic.in_govt_agenda && <span style={{ fontSize: "10px", background: "#dcfce7", color: "#15803d", border: "1px solid #86efac", borderRadius: "20px", padding: "3px 9px", fontWeight: 600 }}>{t.govtBadge}</span>}
               </div>
             )}
-
-            {/* Topic pills */}
             {!loading && pulse?.top_topics && (
               <div>
                 <span style={{ fontSize: "10px", color: theme.textMuted, letterSpacing: "0.12em", textTransform: "uppercase", display: "block", marginBottom: "8px" }}>{t.trending}:</span>
@@ -885,8 +949,6 @@ export default function Home() {
               </div>
             )}
           </div>
-
-          {/* Hero footer */}
           <div style={{ marginTop: "24px", paddingTop: "20px", borderTop: `1px solid ${theme.border}`, display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
             <span style={{ fontSize: "11px", color: theme.textMuted }}>{t.heroDesc}</span>
             <span style={{ fontSize: "11px", color: theme.textMuted }}>·</span>
@@ -910,8 +972,6 @@ export default function Home() {
 
       {/* MAIN CONTENT */}
       <main className="section-padding" style={{ maxWidth: "1280px", margin: "0 auto", padding: "32px 16px 100px" }}>
-
-        {/* NATIONAL PULSE TAB */}
         {activeTab === "pulse" && (
           <div>
             {loading ? (
@@ -937,7 +997,6 @@ export default function Home() {
                   <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "12px", fontWeight: 700, color: theme.textMuted, letterSpacing: "0.12em", textTransform: "uppercase", margin: 0 }}>{t.topicsLabel}</h2>
                   {pulse.engine_used && <span style={{ fontSize: "10px", color: theme.textMuted, background: theme.surface2, border: `1px solid ${theme.border}`, borderRadius: "4px", padding: "3px 9px" }}>{pulse.engine_used} · {Math.round((pulse.analysis_confidence || 0) * 100)}% confidence</span>}
                 </div>
-
                 <div className="topics-grid" style={{ marginBottom: "40px" }}>
                   {pulse.top_topics?.map((topic, i) => (
                     <div key={i} className="topic-card" style={{ animationDelay: `${i * 80}ms` }}>
@@ -945,8 +1004,6 @@ export default function Home() {
                     </div>
                   ))}
                 </div>
-
-                {/* Stats bar */}
                 <div style={{ background: theme.cardBg, border: `1px solid ${theme.cardBorder}`, borderRadius: "14px", padding: "20px 24px", marginBottom: "40px", overflowX: "auto" }}>
                   <div className="stats-row">
                     {[
@@ -964,14 +1021,12 @@ export default function Home() {
                     ))}
                   </div>
                 </div>
-
                 <NigeriaMap t={t} />
               </>
             )}
           </div>
         )}
 
-        {/* GLOBAL IMPACT TAB */}
         {activeTab === "foreign" && (
           <div>
             <div style={{ marginBottom: "24px" }}>
@@ -1004,7 +1059,6 @@ export default function Home() {
           </div>
         )}
 
-        {/* SOCIAL SIGNALS TAB */}
         {activeTab === "social" && (
           <div>
             <div style={{ marginBottom: "24px" }}>
@@ -1023,51 +1077,64 @@ export default function Home() {
             ) : (
               <>
                 <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginBottom: "28px" }}>
-                  {[{ label:"Reddit",color:"#ea580c",count:reddit.length },{ label:"YouTube",color:"#dc2626",count:youtube.length },{ label:"Comments",color:"#f97316",count:comments.length },{ label:"Trends",color:"#d97706",count:trends.length },{ label:"Signals",color:"#16a34a",count:signals.length }].filter(x=>x.count>0).map(({label,color,count})=>(
-                    <div key={label} style={{ display:"flex",alignItems:"center",gap:"6px",background:theme.cardBg,border:`1px solid ${theme.cardBorder}`,borderRadius:"10px",padding:"7px 13px" }}>
-                      <div style={{ width:"7px",height:"7px",borderRadius:"50%",background:color }} />
-                      <span style={{ fontSize:"12px",color:theme.textMuted }}>{label}</span>
-                      <span style={{ fontFamily:"'Playfair Display', serif",fontSize:"15px",fontWeight:700,color:theme.text }}>{count}</span>
-                    </div>
-                  ))}
+                  {[
+                    { label: "Reddit", color: "#FF4500", bg: "#FF450015", icon: "R" },
+                    { label: "YouTube", color: "#FF0000", bg: "#FF000015", icon: "▶" },
+                    { label: "Comments", color: "#f97316", bg: "#f9731615", icon: "💬" },
+                    { label: "Trends", color: "#4285F4", bg: "#4285F415", icon: "↗" },
+                    { label: "Signals", color: "#16a34a", bg: "#16a34a15", icon: "📡" },
+                  ].map(({ label, color, bg, icon }, idx) => {
+                    const counts = [reddit.length, youtube.length, comments.length, trends.length, signals.length];
+                    if (counts[idx] === 0) return null;
+                    return (
+                      <div key={label} style={{ display: "flex", alignItems: "center", gap: "7px", background: bg, border: `1px solid ${color}30`, borderRadius: "10px", padding: "7px 13px" }}>
+                        <span style={{ fontSize: "13px" }}>{icon}</span>
+                        <span style={{ fontSize: "12px", color, fontWeight: 700 }}>{label}</span>
+                        <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "15px", fontWeight: 700, color }}>{counts[idx]}</span>
+                      </div>
+                    );
+                  })}
                 </div>
                 {[
-                  { data:reddit, label:"REDDIT NIGERIA", color:"#ea580c", sub:"posts" },
-                  { data:trends, label:"GOOGLE TRENDS NIGERIA", color:"#d97706", sub:"searches", type:"trends" },
-                  { data:youtube, label:"YOUTUBE — NIGERIAN CHANNELS", color:"#dc2626", sub:"videos" },
-                  { data:comments, label:"YOUTUBE COMMENTS", color:"#f97316", sub:"comments" },
-                  { data:signals, label:"EDITORIAL SIGNALS", color:"#16a34a", sub:"articles", type:"list" },
-                ].filter(s=>s.data.length>0).map(({data,label,color,sub,type})=>(
-                  <div key={label} style={{ marginBottom:"36px" }}>
-                    <div style={{ display:"flex",alignItems:"center",gap:"8px",marginBottom:"14px",flexWrap:"wrap" }}>
-                      <div style={{ width:"3px",height:"14px",background:color,borderRadius:"2px",flexShrink:0 }} />
-                      <h3 style={{ fontFamily:"'Playfair Display', serif",fontSize:"12px",fontWeight:700,color,letterSpacing:"0.1em",margin:0 }}>{label}</h3>
-                      <span style={{ fontSize:"11px",color:theme.textMuted }}>{data.length} {sub}</span>
+                  { data: reddit, label: "REDDIT NIGERIA", color: "#FF4500", sub: "posts", logo: "🟠" },
+                  { data: trends, label: "GOOGLE TRENDS NIGERIA", color: "#4285F4", sub: "searches", type: "trends", logo: "🔵" },
+                  { data: youtube, label: "YOUTUBE — NIGERIAN CHANNELS", color: "#FF0000", sub: "videos", logo: "🔴" },
+                  { data: comments, label: "YOUTUBE COMMENTS", color: "#f97316", sub: "comments", logo: "🟡" },
+                  { data: signals, label: "EDITORIAL SIGNALS", color: "#16a34a", sub: "articles", type: "list", logo: "🟢" },
+                ].filter(s => s.data.length > 0).map(({ data, label, color, sub, type, logo }) => (
+                  <div key={label} style={{ marginBottom: "36px" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "14px", flexWrap: "wrap" }}>
+                      <span style={{ fontSize: "16px" }}>{logo}</span>
+                      <div style={{ width: "3px", height: "14px", background: color, borderRadius: "2px", flexShrink: 0 }} />
+                      <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "12px", fontWeight: 700, color, letterSpacing: "0.1em", margin: 0 }}>{label}</h3>
+                      <span style={{ fontSize: "11px", color: theme.textMuted }}>{data.length} {sub}</span>
                     </div>
-                    {type==="trends" ? (
-                      <div style={{ display:"flex",flexWrap:"wrap",gap:"7px" }}>
-                        {data.map((trend,i)=>(
-                          <a key={i} href={trend.link} target="_blank" rel="noopener noreferrer" style={{ textDecoration:"none" }}>
-                            <div style={{ display:"flex",alignItems:"center",gap:"9px",background:theme.cardBg,border:`1px solid ${theme.cardBorder}`,borderRadius:"8px",padding:"8px 14px" }}>
-                              <span style={{ fontFamily:"'Playfair Display', serif",fontSize:"13px",fontWeight:700,color:"#d97706" }}>{String(i+1).padStart(2,"0")}</span>
-                              <span style={{ fontSize:"13px",color:theme.text }}>{trend.title}</span>
+                    {type === "trends" ? (
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: "7px" }}>
+                        {data.map((trend, i) => (
+                          <a key={i} href={trend.link} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
+                            <div style={{ display: "flex", alignItems: "center", gap: "9px", background: theme.cardBg, border: `1px solid ${theme.cardBorder}`, borderRadius: "8px", padding: "8px 14px", transition: "box-shadow 0.2s" }}
+                              onMouseEnter={e => e.currentTarget.style.boxShadow = "0 2px 10px rgba(0,0,0,0.07)"}
+                              onMouseLeave={e => e.currentTarget.style.boxShadow = "none"}>
+                              <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "13px", fontWeight: 700, color: "#4285F4" }}>{String(i + 1).padStart(2, "0")}</span>
+                              <span style={{ fontSize: "13px", color: theme.text }}>{trend.title}</span>
                             </div>
                           </a>
                         ))}
                       </div>
-                    ) : type==="list" ? (
-                      <div style={{ background:theme.cardBg,border:`1px solid ${theme.cardBorder}`,borderRadius:"12px",overflow:"hidden" }}>
-                        {data.slice(0,14).map((item,i)=>(
-                          <a key={i} href={item.link} target="_blank" rel="noopener noreferrer" style={{ textDecoration:"none" }}>
-                            <div style={{ padding:"12px 16px",borderBottom:i<13?`1px solid ${theme.border}`:"none",transition:"background 0.15s" }}
-                              onMouseEnter={e=>e.currentTarget.style.background=theme.surface2}
-                              onMouseLeave={e=>e.currentTarget.style.background="transparent"}>
-                              <div style={{ display:"flex",justifyContent:"space-between",gap:"10px" }}>
-                                <div style={{ flex:1 }}>
-                                  <span style={{ fontSize:"10px",color:"#16a34a",fontWeight:700,marginRight:"7px" }}>{item.source}</span>
-                                  <p style={{ fontSize:"13px",color:theme.text,lineHeight:1.4,margin:"3px 0 0" }}>{item.title}</p>
+                    ) : type === "list" ? (
+                      <div style={{ background: theme.cardBg, border: `1px solid ${theme.cardBorder}`, borderRadius: "12px", overflow: "hidden" }}>
+                        {data.slice(0, 14).map((item, i) => (
+                          <a key={i} href={item.link} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
+                            <div style={{ padding: "12px 16px", borderBottom: i < 13 ? `1px solid ${theme.border}` : "none", transition: "background 0.15s" }}
+                              onMouseEnter={e => e.currentTarget.style.background = theme.surface2}
+                              onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
+                              <div style={{ display: "flex", justifyContent: "space-between", gap: "10px" }}>
+                                <div style={{ flex: 1 }}>
+                                  <span style={{ fontSize: "10px", color: "#16a34a", fontWeight: 700, marginRight: "7px" }}>{item.source}</span>
+                                  <p style={{ fontSize: "13px", color: theme.text, lineHeight: 1.4, margin: "3px 0 0" }}>{item.title}</p>
                                 </div>
-                                <span style={{ fontSize:"10px",color:theme.textMuted,whiteSpace:"nowrap",marginTop:"2px",flexShrink:0 }}>{timeAgo(item.scraped_at)}</span>
+                                <span style={{ fontSize: "10px", color: theme.textMuted, whiteSpace: "nowrap", marginTop: "2px", flexShrink: 0 }}>{timeAgo(item.scraped_at)}</span>
                               </div>
                             </div>
                           </a>
@@ -1075,7 +1142,7 @@ export default function Home() {
                       </div>
                     ) : (
                       <div className="social-grid">
-                        {data.slice(0,9).map((item,i)=><SocialCard key={i} item={{...item,source:(item.source||"").replace("YouTube — ","")}} accentColor={color} />)}
+                        {data.slice(0, 9).map((item, i) => <SocialCard key={i} item={{ ...item, source: (item.source || "").replace("YouTube — ", "") }} accentColor={color} />)}
                       </div>
                     )}
                   </div>
@@ -1086,7 +1153,7 @@ export default function Home() {
         )}
       </main>
 
-      {/* SUBSCRIBE SECTION */}
+      {/* SUBSCRIBE */}
       <section className="subscribe-section" style={{ borderTop: `1px solid ${theme.border}`, padding: "60px 16px", background: theme.surface }}>
         <div style={{ maxWidth: "520px", margin: "0 auto", textAlign: "center" }}>
           <p style={{ fontSize: "10px", color: "#008751", letterSpacing: "0.2em", fontWeight: 700, marginBottom: "12px", textTransform: "uppercase" }}>{t.stayInformed}</p>
@@ -1100,23 +1167,23 @@ export default function Home() {
           ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: "10px", textAlign: "left" }}>
               {[
-                { type:"text", ph:t.namePlaceholder, val:subscribeName, set:setSubscribeName },
-                { type:"email", ph:t.emailPlaceholder, val:subscribeEmail, set:setSubscribeEmail },
-                { type:"tel", ph:t.whatsappPlaceholder, val:subscribeWhatsapp, set:setSubscribeWhatsapp },
-              ].map(({type,ph,val,set})=>(
-                <input key={type} type={type} placeholder={ph} value={val} onChange={e=>set(e.target.value)}
-                  style={{ width:"100%",padding:"13px 15px",background:theme.inputBg,border:`1px solid ${theme.inputBorder}`,borderRadius:"10px",color:theme.inputColor,fontSize:"14px",fontFamily:"'Source Serif 4', serif" }}
-                  onFocus={e=>e.target.style.borderColor="#008751"}
-                  onBlur={e=>e.target.style.borderColor=theme.inputBorder}
+                { type: "text", ph: t.namePlaceholder, val: subscribeName, set: setSubscribeName },
+                { type: "email", ph: t.emailPlaceholder, val: subscribeEmail, set: setSubscribeEmail },
+                { type: "tel", ph: t.whatsappPlaceholder, val: subscribeWhatsapp, set: setSubscribeWhatsapp },
+              ].map(({ type, ph, val, set }) => (
+                <input key={type} type={type} placeholder={ph} value={val} onChange={e => set(e.target.value)}
+                  style={{ width: "100%", padding: "13px 15px", background: theme.inputBg, border: `1px solid ${theme.inputBorder}`, borderRadius: "10px", color: theme.inputColor, fontSize: "14px", fontFamily: "'Source Serif 4', serif" }}
+                  onFocus={e => e.target.style.borderColor = "#008751"}
+                  onBlur={e => e.target.style.borderColor = theme.inputBorder}
                 />
               ))}
-              {subscribeError && <p style={{ fontSize:"13px",color:"#dc2626",margin:0 }}>{subscribeError}</p>}
+              {subscribeError && <p style={{ fontSize: "13px", color: "#dc2626", margin: 0 }}>{subscribeError}</p>}
               <button onClick={handleSubscribe} disabled={subscribeLoading}
-                style={{ width:"100%",padding:"14px",background:subscribeLoading?"#d1d5db":"#008751",color:"#fff",border:"none",borderRadius:"10px",fontSize:"15px",fontFamily:"'Playfair Display', serif",fontWeight:700,cursor:subscribeLoading?"not-allowed":"pointer",transition:"background 0.2s" }}
-                onMouseEnter={e=>{if(!subscribeLoading)e.currentTarget.style.background="#006b41";}}
-                onMouseLeave={e=>{if(!subscribeLoading)e.currentTarget.style.background="#008751";}}
+                style={{ width: "100%", padding: "14px", background: subscribeLoading ? "#d1d5db" : "#008751", color: "#fff", border: "none", borderRadius: "10px", fontSize: "15px", fontFamily: "'Playfair Display', serif", fontWeight: 700, cursor: subscribeLoading ? "not-allowed" : "pointer", transition: "background 0.2s" }}
+                onMouseEnter={e => { if (!subscribeLoading) e.currentTarget.style.background = "#006b41"; }}
+                onMouseLeave={e => { if (!subscribeLoading) e.currentTarget.style.background = "#008751"; }}
               >{subscribeLoading ? t.subscribing : t.subscribeCTA}</button>
-              <p style={{ fontSize:"12px",color:theme.textMuted,textAlign:"center" }}>{t.noSpam}</p>
+              <p style={{ fontSize: "12px", color: theme.textMuted, textAlign: "center" }}>{t.noSpam}</p>
             </div>
           )}
         </div>
@@ -1135,36 +1202,40 @@ export default function Home() {
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
               {[
-                { icon:"in", label:"LinkedIn",  href:"https://linkedin.com",  color:"#0077b5" },
-                { icon:"wa", label:"WhatsApp",  href:"https://whatsapp.com",  color:"#25d366" },
-                { icon:"fb", label:"Facebook",  href:"https://facebook.com",  color:"#1877f2" },
-                { icon:"x",  label:"X",         href:"https://twitter.com",   color:"#111827" },
-                { icon:"ig", label:"Instagram", href:"https://instagram.com", color:"#e1306c" },
-              ].map(({icon,label,href,color})=>(
-                <a key={icon} href={href} target="_blank" rel="noopener noreferrer"
-                  style={{ display:"flex",alignItems:"center",justifyContent:"center",width:"34px",height:"34px",borderRadius:"50%",background:theme.surface2,border:`1px solid ${theme.border}`,textDecoration:"none",fontSize:"12px",fontWeight:700,color:theme.textMuted,transition:"all 0.2s" }}
-                  onMouseEnter={e=>{e.currentTarget.style.background=color+"15";e.currentTarget.style.borderColor=color+"50";e.currentTarget.style.color=color;}}
-                  onMouseLeave={e=>{e.currentTarget.style.background=theme.surface2;e.currentTarget.style.borderColor=theme.border;e.currentTarget.style.color=theme.textMuted;}}
-                  title={label}
-                >{icon==="in"?"in":icon==="wa"?"W":icon==="fb"?"f":icon==="x"?"X":"ig"}</a>
+                { bg: "#25d366", icon: <WhatsAppIcon />, label: "WhatsApp", href: "https://whatsapp.com" },
+                { bg: "#000", icon: <XIcon />, label: "X", href: "https://twitter.com" },
+                { bg: "#1877f2", icon: <FacebookIcon />, label: "Facebook", href: "https://facebook.com" },
+                { bg: "#0077b5", icon: <LinkedInIcon />, label: "LinkedIn", href: "https://linkedin.com" },
+                { bg: "#e1306c", icon: null, label: "Instagram", href: "https://instagram.com", letter: "ig" },
+              ].map(({ bg, icon, label, href, letter }) => (
+                <a key={label} href={href} target="_blank" rel="noopener noreferrer" title={label}
+                  style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "34px", height: "34px", borderRadius: "50%", background: bg, color: "#fff", textDecoration: "none", fontSize: "13px", fontWeight: 700, transition: "transform 0.2s, opacity 0.2s", opacity: 0.85 }}
+                  onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.12)"; e.currentTarget.style.opacity = "1"; }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.opacity = "0.85"; }}
+                >
+                  {icon || letter}
+                </a>
               ))}
             </div>
           </div>
-          <div style={{ borderTop:`1px solid ${theme.border}`,paddingTop:"16px",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:"8px" }}>
-            <p style={{ fontSize:"11px",color:theme.textMuted }}>© 2026 Nigeria Pulse · All rights reserved</p>
-            <p style={{ fontSize:"11px",color:theme.textMuted }}>Auto-refreshes every 5 min · 23+ sources · Powered by AI</p>
+          <div style={{ borderTop: `1px solid ${theme.border}`, paddingTop: "16px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "8px" }}>
+            <p style={{ fontSize: "11px", color: theme.textMuted }}>© 2026 Nigeria Pulse · All rights reserved</p>
+            <p style={{ fontSize: "11px", color: theme.textMuted }}>Auto-refreshes every 5 min · 23+ sources · Powered by AI</p>
           </div>
         </div>
       </footer>
 
+      {/* ── FLOATING SOCIAL BAR — always visible above AI button ── */}
+      {!chatOpen && <FloatingSocialBar pulse={pulse} />}
+
       {/* AI CHAT */}
       <AIChatWidget t={t} isOpen={chatOpen} onClose={() => setChatOpen(false)} pulse={pulse} />
 
-      {/* FAB */}
+      {/* AI FAB */}
       <button onClick={() => setChatOpen(!chatOpen)}
-        style={{ position:"fixed",bottom:"24px",right:"24px",width:"54px",height:"54px",borderRadius:"50%",background:chatOpen?"#dc2626":"#008751",color:"#fff",border:"none",cursor:"pointer",fontSize:"14px",fontWeight:700,boxShadow:chatOpen?"0 4px 20px rgba(220,38,38,0.4)":"0 4px 20px rgba(0,135,81,0.4)",zIndex:999,display:"flex",alignItems:"center",justifyContent:"center",transition:"background 0.2s, transform 0.2s",fontFamily:"'Playfair Display', serif" }}
-        onMouseEnter={e=>e.currentTarget.style.transform="scale(1.1)"}
-        onMouseLeave={e=>e.currentTarget.style.transform="scale(1)"}
+        style={{ position: "fixed", bottom: "24px", right: "24px", width: "54px", height: "54px", borderRadius: "50%", background: chatOpen ? "#dc2626" : "#008751", color: "#fff", border: "none", cursor: "pointer", fontSize: "14px", fontWeight: 700, boxShadow: chatOpen ? "0 4px 20px rgba(220,38,38,0.4)" : "0 4px 20px rgba(0,135,81,0.4)", zIndex: 999, display: "flex", alignItems: "center", justifyContent: "center", transition: "background 0.2s, transform 0.2s", fontFamily: "'Playfair Display', serif" }}
+        onMouseEnter={e => e.currentTarget.style.transform = "scale(1.1)"}
+        onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
       >{chatOpen ? "×" : "AI"}</button>
     </div>
   );
