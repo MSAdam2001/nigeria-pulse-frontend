@@ -1192,30 +1192,11 @@ export default function Home() {
       {/* FOOTER */}
       <footer className="footer-padding" style={{ borderTop: `1px solid ${theme.border}`, background: theme.bg, padding: "28px 16px" }}>
         <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "20px", marginBottom: "20px" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
-              <div style={{ width: "26px", height: "26px", borderRadius: "6px", background: "#008751", flexShrink: 0 }} />
-              <div>
-                <p style={{ fontFamily: "'Playfair Display', serif", fontSize: "15px", fontWeight: 800, color: theme.text, margin: 0 }}>Nigeria <span style={{ color: "#008751" }}>Pulse</span></p>
-                <p style={{ fontSize: "10px", color: theme.textMuted, margin: 0 }}>{t.footerBuilt}</p>
-              </div>
-            </div>
-            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-              {[
-                { bg: "#25d366", icon: <WhatsAppIcon />, label: "WhatsApp", href: "https://whatsapp.com" },
-                { bg: "#000", icon: <XIcon />, label: "X", href: "https://twitter.com" },
-                { bg: "#1877f2", icon: <FacebookIcon />, label: "Facebook", href: "https://facebook.com" },
-                { bg: "#0077b5", icon: <LinkedInIcon />, label: "LinkedIn", href: "https://linkedin.com" },
-                { bg: "#e1306c", icon: null, label: "Instagram", href: "https://instagram.com", letter: "ig" },
-              ].map(({ bg, icon, label, href, letter }) => (
-                <a key={label} href={href} target="_blank" rel="noopener noreferrer" title={label}
-                  style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "34px", height: "34px", borderRadius: "50%", background: bg, color: "#fff", textDecoration: "none", fontSize: "13px", fontWeight: 700, transition: "transform 0.2s, opacity 0.2s", opacity: 0.85 }}
-                  onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.12)"; e.currentTarget.style.opacity = "1"; }}
-                  onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.opacity = "0.85"; }}
-                >
-                  {icon || letter}
-                </a>
-              ))}
+          <div style={{ display: "flex", alignItems: "center", gap: "9px", marginBottom: "20px" }}>
+            <div style={{ width: "26px", height: "26px", borderRadius: "6px", background: "#008751", flexShrink: 0 }} />
+            <div>
+              <p style={{ fontFamily: "'Playfair Display', serif", fontSize: "15px", fontWeight: 800, color: theme.text, margin: 0 }}>Nigeria <span style={{ color: "#008751" }}>Pulse</span></p>
+              <p style={{ fontSize: "10px", color: theme.textMuted, margin: 0 }}>{t.footerBuilt}</p>
             </div>
           </div>
           <div style={{ borderTop: `1px solid ${theme.border}`, paddingTop: "16px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "8px" }}>
