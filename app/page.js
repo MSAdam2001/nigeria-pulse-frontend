@@ -519,8 +519,6 @@ function FloatingSocialBar({ pulse }) {
             rel="noopener noreferrer"
             onClick={action ? e => { e.preventDefault(); action(); } : undefined}
             title={label}
-            onMouseEnter={() => setShowTooltip(id)}
-            onMouseLeave={() => setShowTooltip(null)}
             style={{
               width: "42px",
               height: "42px",
