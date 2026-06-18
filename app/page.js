@@ -438,10 +438,21 @@ function CopyIcon() {
   );
 }
 
-// ─── FLOATING SOCIAL BAR ─────────────────────────────────────
+// ─── FLOATING SOCIAL BAR — replace the existing FloatingSocialBar function ───
+// On mobile: single green share button that expands into a fan of icons
+// On desktop: vertical stack as before
+
 function FloatingSocialBar({ pulse }) {
   const [copied, setCopied] = useState(false);
-  const [showTooltip, setShowTooltip] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 640);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   const getShareText = () => {
     const topic = pulse?.top_topics?.[0];
@@ -462,7 +473,7 @@ function FloatingSocialBar({ pulse }) {
     },
     {
       id: "x",
-      label: "X / Twitter",
+      label: "X",
       bg: "#000000",
       icon: <XIcon />,
       href: () => `https://twitter.com/intent/tweet?text=${encodeURIComponent(getShareText())}`,
@@ -490,29 +501,112 @@ function FloatingSocialBar({ pulse }) {
     },
     {
       id: "copy",
-      label: copied ? "Copied!" : "Copy Link",
+      label: copied ? "Copied!" : "Copy",
       bg: copied ? "#008751" : "#6b7280",
       icon: <CopyIcon />,
       href: () => null,
       action: () => {
         navigator.clipboard?.writeText(shareUrl);
         setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
+        setTimeout(() => { setCopied(false); setOpen(false); }, 2000);
       },
     },
   ];
 
+  // ── MOBILE: single button + expandable fan ──
+  if (isMobile) {
+    return (
+      <>
+        {/* Backdrop — tap outside to close */}
+        {open && (
+          <div
+            onClick={() => setOpen(false)}
+            style={{ position: "fixed", inset: 0, zIndex: 996 }}
+          />
+        )}
+
+        <div style={{ position: "fixed", bottom: "90px", right: "16px", zIndex: 997, display: "flex", flexDirection: "column", alignItems: "center", gap: "10px" }}>
+          {/* Expanded social buttons — slide up when open */}
+          {socials.map(({ id, label, bg, icon, href, action }, idx) => (
+            <div
+              key={id}
+              style={{
+                transform: open ? "translateY(0) scale(1)" : "translateY(20px) scale(0.7)",
+                opacity: open ? 1 : 0,
+                pointerEvents: open ? "auto" : "none",
+                transition: `transform 0.25s ease ${open ? idx * 35 : (socials.length - idx) * 25}ms, opacity 0.2s ease ${open ? idx * 35 : 0}ms`,
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+              }}
+            >
+              {/* Label pill */}
+              <span style={{
+                background: "#111827",
+                color: "#fff",
+                fontSize: "11px",
+                fontWeight: 600,
+                padding: "3px 9px",
+                borderRadius: "20px",
+                whiteSpace: "nowrap",
+                fontFamily: "'Source Serif 4', serif",
+                boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
+              }}>
+                {label}
+              </span>
+              <a
+                href={href() || undefined}
+                target={href() ? "_blank" : undefined}
+                rel="noopener noreferrer"
+                onClick={action ? e => { e.preventDefault(); action(); } : () => setOpen(false)}
+                style={{
+                  width: "40px", height: "40px", borderRadius: "50%",
+                  background: bg, color: "#fff",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  textDecoration: "none",
+                  boxShadow: "0 2px 10px rgba(0,0,0,0.25)",
+                  flexShrink: 0,
+                }}
+              >
+                {icon}
+              </a>
+            </div>
+          ))}
+
+          {/* Main toggle button */}
+          <button
+            onClick={() => setOpen(!open)}
+            style={{
+              width: "48px", height: "48px", borderRadius: "50%",
+              background: open ? "#dc2626" : "#008751",
+              color: "#fff", border: "none", cursor: "pointer",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              boxShadow: "0 4px 16px rgba(0,0,0,0.25)",
+              transition: "background 0.2s, transform 0.2s",
+              transform: open ? "rotate(45deg)" : "rotate(0deg)",
+              fontSize: "20px",
+              zIndex: 998,
+            }}
+          >
+            {open ? "×" : (
+              // Share icon
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+              </svg>
+            )}
+          </button>
+        </div>
+      </>
+    );
+  }
+
+  // ── DESKTOP: vertical stack ──
   return (
     <div style={{ position: "fixed", bottom: "90px", right: "24px", display: "flex", flexDirection: "column", gap: "8px", zIndex: 998, alignItems: "center" }}>
       {socials.map(({ id, label, bg, icon, href, action }) => (
         <div key={id} style={{ position: "relative" }}>
-          {/* Tooltip */}
-          {showTooltip === id && (
-            <div style={{ position: "absolute", right: "54px", top: "50%", transform: "translateY(-50%)", background: "#111827", color: "#fff", fontSize: "11px", fontWeight: 600, padding: "4px 10px", borderRadius: "6px", whiteSpace: "nowrap", pointerEvents: "none", fontFamily: "'Source Serif 4', serif" }}>
-              {label}
-              <div style={{ position: "absolute", right: "-4px", top: "50%", transform: "translateY(-50%)", width: "8px", height: "8px", background: "#111827", clipPath: "polygon(0 50%, 100% 0, 100% 100%)" }} />
-            </div>
-          )}
           <a
             href={href() || undefined}
             target={href() ? "_blank" : undefined}
@@ -520,22 +614,16 @@ function FloatingSocialBar({ pulse }) {
             onClick={action ? e => { e.preventDefault(); action(); } : undefined}
             title={label}
             style={{
-              width: "42px",
-              height: "42px",
-              borderRadius: "50%",
-              background: bg,
-              color: "#fff",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
+              width: "42px", height: "42px", borderRadius: "50%",
+              background: bg, color: "#fff",
+              display: "flex", alignItems: "center", justifyContent: "center",
               textDecoration: "none",
               boxShadow: "0 2px 10px rgba(0,0,0,0.2)",
               transition: "transform 0.2s, box-shadow 0.2s",
-              cursor: "pointer",
-              flexShrink: 0,
+              cursor: "pointer", flexShrink: 0,
             }}
-            onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.15)"; e.currentTarget.style.boxShadow = "0 4px 16px rgba(0,0,0,0.3)"; setShowTooltip(id); }}
-            onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 2px 10px rgba(0,0,0,0.2)"; setShowTooltip(null); }}
+            onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.15)"; e.currentTarget.style.boxShadow = "0 4px 16px rgba(0,0,0,0.3)"; }}
+            onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 2px 10px rgba(0,0,0,0.2)"; }}
           >
             {icon}
           </a>
