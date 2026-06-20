@@ -1,3 +1,4 @@
+
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
@@ -32,18 +33,6 @@ function Skeleton({ h = 20, w = "100%" }) {
       animation: "shimmer 1.5s infinite",
       borderRadius: 6,
     }} />
-  );
-}
-
-function IntensityBar({ value }) {
-  const color = value >= 8 ? "#dc2626" : value >= 5 ? "#d97706" : "#16a34a";
-  return (
-    <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-      <div style={{ width: "64px", height: "4px", background: "#e5e7eb", borderRadius: "2px", overflow: "hidden" }}>
-        <div style={{ width: `${value * 10}%`, height: "100%", background: color, borderRadius: "2px" }} />
-      </div>
-      <span style={{ fontSize: "13px", fontWeight: 700, color }}>{value}/10</span>
-    </div>
   );
 }
 
@@ -114,7 +103,7 @@ function SiteHeader({ onBack }) {
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
           <span style={{ fontSize: "10px", color: "#6b7280", background: "#f1f5f9", border: "1px solid #e5e7eb", borderRadius: "20px", padding: "4px 12px", letterSpacing: "0.06em" }}>
-            TOPIC DETAIL
+            ARTICLE
           </span>
           <span style={{ display: "inline-flex", alignItems: "center", gap: "5px", background: "#dcfce7", border: "1px solid #86efac", borderRadius: "20px", padding: "4px 10px" }}>
             <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#16a34a", display: "inline-block", animation: "pulseDot 1.5s ease infinite" }} />
@@ -163,7 +152,6 @@ export default function TopicDetail() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [activeFilter, setActiveFilter] = useState("all");
 
   const accentColors = ["#008751", "#2563eb", "#dc2626", "#d97706", "#7c3aed"];
   const color = accentColors[parseInt(id)] || ACCENT;
@@ -182,252 +170,147 @@ export default function TopicDetail() {
   }, [id]);
 
   const topic = data?.topic;
+  const article = data?.article;
   const articles = data?.articles || [];
   const relatedAlerts = data?.related_alerts || [];
   const sentiment = data?.sentiment_breakdown || {};
   const sentimentTotal = (sentiment.positive || 0) + (sentiment.negative || 0) + (sentiment.neutral || 0);
   const sentimentPct = (val) => sentimentTotal > 0 ? Math.round((val / sentimentTotal) * 100) : 0;
   const sources = [...new Set(articles.map(a => a.source))];
-  const filtered = activeFilter === "all" ? articles : articles.filter(a => a.source === activeFilter);
 
   return (
-    <div style={{ minHeight: "100vh", background: "#f8fafc", fontFamily: "'Source Serif 4', Georgia, serif", display: "flex", flexDirection: "column" }}>
+    <div style={{ minHeight: "100vh", background: "#fff", fontFamily: "'Source Serif 4', Georgia, serif", display: "flex", flexDirection: "column" }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap');
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
         @keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
         @keyframes pulseDot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.3)} }
-        .article-card { transition: box-shadow 0.2s, transform 0.2s; cursor: pointer; }
-        .article-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.09) !important; transform: translateY(-2px); }
-        .filter-pill { transition: all 0.15s; }
-        .page-grid { display: grid; grid-template-columns: 1fr 300px; gap: 28px; align-items: start; }
+        .source-card { transition: box-shadow 0.2s, transform 0.2s; cursor: pointer; }
+        .source-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08) !important; transform: translateY(-2px); }
+        .page-grid { display: grid; grid-template-columns: 1fr 300px; gap: 40px; align-items: start; }
         @media (max-width: 960px) { .page-grid { grid-template-columns: 1fr; } }
         @media (max-width: 640px) {
-          .hero-padding { padding: 28px 16px 24px !important; }
-          .main-padding { padding: 20px 16px 60px !important; }
-          .hero-title { font-size: 26px !important; }
-          .filter-row { overflow-x: auto; -webkit-overflow-scrolling: touch; flex-wrap: nowrap !important; }
-          .filter-row::-webkit-scrollbar { display: none; }
+          .article-padding { padding: 24px 16px 60px !important; }
+          .headline { font-size: 26px !important; }
+          .body-text { font-size: 16px !important; }
         }
       `}</style>
 
       <SiteHeader onBack={goHome} />
 
       {loading ? (
-        <div style={{ background: "#fff", borderBottom: "1px solid #e5e7eb", padding: "40px 24px" }}>
-          <div style={{ maxWidth: "1280px", margin: "0 auto", display: "flex", flexDirection: "column", gap: "14px" }}>
-            <Skeleton h={12} w="140px" />
-            <Skeleton h={44} w="70%" />
-            <Skeleton h={18} w="90%" />
-            <Skeleton h={18} w="75%" />
+        <div style={{ maxWidth: "760px", margin: "0 auto", padding: "40px 24px", width: "100%" }}>
+          <Skeleton h={12} w="120px" />
+          <div style={{ marginTop: "16px" }}><Skeleton h={40} w="90%" /></div>
+          <div style={{ marginTop: "10px" }}><Skeleton h={40} w="60%" /></div>
+          <div style={{ marginTop: "24px" }}><Skeleton h={14} w="200px" /></div>
+          <div style={{ marginTop: "32px", display: "flex", flexDirection: "column", gap: "12px" }}>
+            <Skeleton h={16} w="100%" />
+            <Skeleton h={16} w="100%" />
+            <Skeleton h={16} w="80%" />
           </div>
         </div>
       ) : error ? (
-        <div style={{ background: "#fff", borderBottom: "1px solid #e5e7eb", padding: "80px 24px", textAlign: "center", flex: 1 }}>
+        <div style={{ padding: "80px 24px", textAlign: "center", flex: 1 }}>
           <p style={{ fontSize: "16px", color: "#dc2626", marginBottom: "16px" }}>⚠️ {error}</p>
           <button onClick={goHome} style={{ background: ACCENT, color: "#fff", border: "none", borderRadius: "8px", padding: "10px 24px", cursor: "pointer", fontSize: "14px", fontFamily: "inherit" }}>
             ← Go Home
           </button>
         </div>
-      ) : topic ? (
-        <div className="hero-padding" style={{
-          background: `linear-gradient(160deg, ${color}07 0%, #fff 55%, #f8fafc 100%)`,
-          borderBottom: "1px solid #e5e7eb",
-          padding: "40px 24px 32px",
-          position: "relative", overflow: "hidden",
-        }}>
-          <div style={{
-            position: "absolute", right: "-10px", top: "50%",
-            transform: "translateY(-50%)",
-            fontFamily: "'Playfair Display', serif",
-            fontSize: "clamp(100px, 20vw, 200px)",
-            fontWeight: 800, color: `${color}06`,
-            pointerEvents: "none", userSelect: "none",
-            letterSpacing: "-0.05em", lineHeight: 1,
-          }}>
-            {String(parseInt(id) + 1).padStart(2, "0")}
-          </div>
-          <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: "4px", background: `linear-gradient(180deg, ${color} 0%, ${color}60 100%)` }} />
-
-          <div style={{ maxWidth: "1280px", margin: "0 auto", position: "relative", zIndex: 1, animation: "fadeUp 0.4s ease" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "18px", flexWrap: "wrap" }}>
-              <span style={{ fontSize: "10px", fontWeight: 700, background: color, color: "#fff", borderRadius: "6px", padding: "3px 10px", letterSpacing: "0.1em", textTransform: "uppercase" }}>
-                #{parseInt(id) + 1} Trending
-              </span>
-              {topic.category && (
-                <span style={{ fontSize: "10px", color: "#6b7280", background: "#f1f5f9", border: "1px solid #e5e7eb", borderRadius: "6px", padding: "3px 10px", textTransform: "uppercase", letterSpacing: "0.06em" }}>
-                  {topic.category}
-                </span>
-              )}
-              {topic.in_govt_agenda && (
-                <span style={{ fontSize: "10px", background: "#dcfce7", color: "#15803d", border: "1px solid #86efac", borderRadius: "20px", padding: "3px 9px", fontWeight: 600 }}>
-                  Govt Agenda
-                </span>
-              )}
-              {topic.foreign_impact && (
-                <span style={{ fontSize: "10px", background: "#fef3c7", color: "#92400e", border: "1px solid #fcd34d", borderRadius: "20px", padding: "3px 9px", fontWeight: 600 }}>
-                  Global Impact
-                </span>
-              )}
-              {topic.sentiment && (
-                <span style={{ fontSize: "10px", background: topic.sentiment === "positive" ? "#dcfce7" : topic.sentiment === "negative" ? "#fee2e2" : "#f1f5f9", color: topic.sentiment === "positive" ? "#15803d" : topic.sentiment === "negative" ? "#b91c1c" : "#475569", borderRadius: "20px", padding: "3px 9px", fontWeight: 600, textTransform: "capitalize" }}>
-                  {topic.sentiment === "positive" ? "↑" : topic.sentiment === "negative" ? "↓" : "→"} {topic.sentiment} sentiment
-                </span>
-              )}
-            </div>
-
-            <h1 className="hero-title" style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: "clamp(26px, 4vw, 52px)",
-              fontWeight: 800, color: "#111827",
-              lineHeight: 1.06, marginBottom: "18px",
-              letterSpacing: "-0.025em", maxWidth: "820px",
-            }}>
-              <span style={{ color, fontStyle: "italic" }}>{topic.name}</span>
-            </h1>
-
-            <p style={{
-              fontSize: "clamp(15px, 1.5vw, 18px)", color: "#374151",
-              lineHeight: 1.8, maxWidth: "720px", marginBottom: "20px",
-              borderLeft: `4px solid ${color}`, paddingLeft: "18px",
-              fontStyle: "italic",
-            }}>
-              {topic.summary}
-            </p>
-
-            {topic.sentiment_reason && (
-              <p style={{ fontSize: "14px", color: "#6b7280", marginBottom: "22px", maxWidth: "680px", lineHeight: 1.7 }}>
-                <strong style={{ color: "#374151" }}>AI Analysis:</strong> {topic.sentiment_reason}
-              </p>
-            )}
-
-            <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", alignItems: "center", marginBottom: "18px" }}>
-              <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: "10px", padding: "8px 14px", display: "flex", alignItems: "center", gap: "8px" }}>
-                <span style={{ fontSize: "10px", color: "#9ca3af", letterSpacing: "0.08em" }}>INTENSITY</span>
-                <IntensityBar value={topic.intensity} />
-              </div>
-              <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: "10px", padding: "8px 14px", display: "flex", alignItems: "center", gap: "8px" }}>
-                <span style={{ fontSize: "10px", color: "#9ca3af", letterSpacing: "0.08em" }}>ARTICLES</span>
-                <span style={{ fontSize: "13px", fontWeight: 700, color: "#111827" }}>{articles.length}</span>
-              </div>
-              <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: "10px", padding: "8px 14px", display: "flex", alignItems: "center", gap: "8px" }}>
-                <span style={{ fontSize: "10px", color: "#9ca3af", letterSpacing: "0.08em" }}>SOURCES</span>
-                <span style={{ fontSize: "13px", fontWeight: 700, color: "#111827" }}>{sources.length}</span>
-              </div>
-              {data?.confidence && (
-                <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: "10px", padding: "8px 14px", display: "flex", alignItems: "center", gap: "8px" }}>
-                  <span style={{ fontSize: "10px", color: "#9ca3af", letterSpacing: "0.08em" }}>AI CONFIDENCE</span>
-                  <span style={{ fontSize: "13px", fontWeight: 700, color: ACCENT }}>{Math.round(data.confidence * 100)}%</span>
-                </div>
-              )}
-              {data?.generated_at && (
-                <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: "10px", padding: "8px 14px", display: "flex", alignItems: "center", gap: "8px" }}>
-                  <span style={{ fontSize: "10px", color: "#9ca3af", letterSpacing: "0.08em" }}>UPDATED</span>
-                  <span style={{ fontSize: "11px", color: "#6b7280" }}>{timeAgo(data.generated_at)}</span>
-                </div>
-              )}
-            </div>
-
-            {topic.keywords?.length > 0 && (
-              <div style={{ display: "flex", gap: "6px", flexWrap: "wrap", alignItems: "center" }}>
-                <span style={{ fontSize: "10px", color: "#9ca3af", letterSpacing: "0.08em" }}>KEYWORDS:</span>
-                {topic.keywords.map((kw, i) => (
-                  <span key={i} style={{ fontSize: "11px", background: color + "12", border: `1px solid ${color}22`, color, borderRadius: "5px", padding: "2px 8px", fontWeight: 600 }}>
-                    {kw}
-                  </span>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-      ) : null}
-
-      <div style={{ height: "3px", background: `linear-gradient(90deg, ${color} 0%, ${color}40 60%, transparent 100%)`, flexShrink: 0 }} />
-
-      {!loading && !error && topic && (
-        <main className="main-padding" style={{ maxWidth: "1280px", margin: "0 auto", width: "100%", padding: "28px 24px 80px", flex: 1 }}>
+      ) : topic && article ? (
+        <main className="article-padding" style={{ maxWidth: "1280px", margin: "0 auto", width: "100%", padding: "40px 24px 80px", flex: 1 }}>
           <div className="page-grid">
 
-            <div>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "14px", flexWrap: "wrap", gap: "8px" }}>
-                <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "11px", fontWeight: 700, color: "#9ca3af", letterSpacing: "0.14em", textTransform: "uppercase" }}>
-                  NEWS COVERAGE ({filtered.length} article{filtered.length !== 1 ? "s" : ""})
-                </h2>
-                {data?.generated_at && (
-                  <span style={{ fontSize: "11px", color: "#9ca3af" }}>{formatDate(data.generated_at)}</span>
+            {/* ── ARTICLE COLUMN ── */}
+            <article style={{ maxWidth: "760px", animation: "fadeUp 0.4s ease" }}>
+
+              {/* Badges */}
+              <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "16px", flexWrap: "wrap" }}>
+                <span style={{ fontSize: "10px", fontWeight: 700, background: color, color: "#fff", borderRadius: "5px", padding: "3px 9px", letterSpacing: "0.1em", textTransform: "uppercase" }}>
+                  #{parseInt(id) + 1} Trending
+                </span>
+                {topic.category && (
+                  <span style={{ fontSize: "10px", color: "#6b7280", background: "#f1f5f9", border: "1px solid #e5e7eb", borderRadius: "5px", padding: "3px 9px", textTransform: "uppercase", letterSpacing: "0.06em" }}>
+                    {topic.category}
+                  </span>
+                )}
+                {topic.in_govt_agenda && (
+                  <span style={{ fontSize: "10px", background: "#dcfce7", color: "#15803d", border: "1px solid #86efac", borderRadius: "20px", padding: "3px 8px", fontWeight: 600 }}>
+                    Govt Agenda
+                  </span>
                 )}
               </div>
 
-              {sources.length > 1 && (
-                <div className="filter-row" style={{ display: "flex", gap: "6px", marginBottom: "18px", flexWrap: "wrap" }}>
-                  {["all", ...sources].map(src => {
-                    const count = src === "all" ? articles.length : articles.filter(a => a.source === src).length;
-                    const active = activeFilter === src;
-                    return (
-                      <button key={src} className="filter-pill" onClick={() => setActiveFilter(src)}
-                        style={{
-                          padding: "5px 12px", borderRadius: "20px",
-                          border: `1.5px solid ${active ? color : "#e5e7eb"}`,
-                          background: active ? color + "12" : "#fff",
-                          color: active ? color : "#6b7280",
-                          fontSize: "11px", fontWeight: active ? 700 : 400,
-                          cursor: "pointer", fontFamily: "inherit",
-                          whiteSpace: "nowrap", flexShrink: 0,
-                        }}>
-                        {src === "all" ? "All" : src.replace("YouTube — ", "").replace(" Nigeria", "")} ({count})
-                      </button>
-                    );
-                  })}
-                </div>
-              )}
+              {/* Headline */}
+              <h1 className="headline" style={{
+                fontFamily: "'Playfair Display', serif",
+                fontSize: "38px", fontWeight: 800, color: "#111827",
+                lineHeight: 1.2, marginBottom: "16px", letterSpacing: "-0.02em",
+              }}>
+                {article.headline}
+              </h1>
 
-              {filtered.length === 0 ? (
-                <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: "14px", padding: "56px 24px", textAlign: "center" }}>
-                  <div style={{ fontSize: "32px", marginBottom: "12px" }}>📰</div>
-                  <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "16px", fontWeight: 700, color: "#374151", marginBottom: "8px" }}>
-                    No recent articles found
-                  </h3>
-                  <p style={{ fontSize: "13px", color: "#9ca3af", lineHeight: 1.6, maxWidth: "320px", margin: "0 auto" }}>
-                    This topic was identified in the AI analysis but no matching articles were found in the scraped window. Check back after the next refresh.
+              {/* Byline */}
+              <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "24px", paddingBottom: "20px", borderBottom: "1px solid #e5e7eb", flexWrap: "wrap" }}>
+                <span style={{ fontSize: "13px", color: "#374151" }}>
+                  By <strong style={{ color: "#111827" }}>{article.byline || "Nigeria Pulse Intelligence"}</strong>
+                </span>
+                <span style={{ color: "#d1d5db" }}>·</span>
+                <span style={{ fontSize: "13px", color: "#6b7280" }}>{timeAgo(article.generated_at || data.generated_at)}</span>
+                <span style={{ color: "#d1d5db" }}>·</span>
+                <span style={{ fontSize: "13px", color: "#6b7280" }}>{sources.length} source{sources.length !== 1 ? "s" : ""}</span>
+              </div>
+
+              {/* Body paragraphs */}
+              <div style={{ display: "flex", flexDirection: "column", gap: "20px", marginBottom: "32px" }}>
+                {article.paragraphs.map((p, i) => (
+                  <p key={i} className="body-text" style={{
+                    fontSize: "18px", lineHeight: 1.85, color: "#1f2937",
+                    fontWeight: i === 0 ? 500 : 400,
+                  }}>
+                    {p}
                   </p>
-                </div>
-              ) : (
-                <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
-                  {filtered.map((article, i) => (
-                    <a key={i} href={article.link} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
-                      <div className="article-card" style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: "14px", overflow: "hidden" }}>
-                        <div style={{ height: "3px", background: i === 0 ? color : "#f1f5f9" }} />
-                        <div style={{ padding: "18px 20px" }}>
-                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
-                            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                              {getFavicon(article.source) && (
-                                <img src={getFavicon(article.source)} alt="" width="16" height="16" style={{ borderRadius: "3px" }} onError={e => e.target.style.display = "none"} />
-                              )}
-                              <span style={{ fontSize: "11px", fontWeight: 700, color, letterSpacing: "0.04em" }}>{article.source}</span>
-                              <span style={{ fontSize: "10px", color: "#9ca3af", background: "#f9fafb", border: "1px solid #f3f4f6", borderRadius: "4px", padding: "1px 6px", textTransform: "uppercase", letterSpacing: "0.04em" }}>
-                                {article.category?.replace("_", " ")}
-                              </span>
-                            </div>
-                            <span style={{ fontSize: "11px", color: "#9ca3af" }}>{timeAgo(article.published_at)}</span>
-                          </div>
-                          <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: i === 0 ? "19px" : "16px", fontWeight: i === 0 ? 700 : 600, color: "#111827", lineHeight: 1.4, marginBottom: article.summary ? "8px" : 0, letterSpacing: "-0.01em" }}>
-                            {article.title}
-                          </h3>
-                          {article.summary && article.summary.length > 10 && (
-                            <p style={{ fontSize: "13px", color: "#4b5563", lineHeight: 1.65, margin: "0 0 10px" }}>
-                              {article.summary.slice(0, 240)}{article.summary.length > 240 ? "…" : ""}
-                            </p>
+                ))}
+              </div>
+
+              {/* AI disclosure note */}
+              <div style={{ background: "#f9fafb", border: "1px solid #e5e7eb", borderRadius: "10px", padding: "12px 16px", marginBottom: "32px" }}>
+                <p style={{ fontSize: "12px", color: "#6b7280", lineHeight: 1.6, margin: 0 }}>
+                  <strong style={{ color: "#374151" }}>ℹ️ About this article:</strong> This piece was synthesized by Nigeria Pulse's AI from {sources.length} independent news sources tracking this story. It is not copied from any single outlet. Original reporting is linked below.
+                </p>
+              </div>
+
+              {/* Sources cited */}
+              {articles.length > 0 && (
+                <div style={{ borderTop: "2px solid #111827", paddingTop: "20px" }}>
+                  <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "14px", fontWeight: 700, color: "#111827", letterSpacing: "0.04em", textTransform: "uppercase", marginBottom: "16px" }}>
+                    Sources & further reading
+                  </h2>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                    {articles.slice(0, 10).map((a, i) => (
+                      <a key={i} href={a.link} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
+                        <div className="source-card" style={{ display: "flex", gap: "12px", alignItems: "flex-start", padding: "12px", borderRadius: "10px", border: "1px solid #f3f4f6" }}>
+                          {getFavicon(a.source) && (
+                            <img src={getFavicon(a.source)} alt="" width="18" height="18" style={{ borderRadius: "4px", marginTop: "2px", flexShrink: 0 }} onError={e => e.target.style.display = "none"} />
                           )}
-                          <span style={{ fontSize: "11px", color, fontWeight: 600 }}>Read full story →</span>
+                          <div style={{ flex: 1, minWidth: 0 }}>
+                            <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "3px", flexWrap: "wrap" }}>
+                              <span style={{ fontSize: "11px", fontWeight: 700, color }}>{a.source}</span>
+                              <span style={{ fontSize: "11px", color: "#9ca3af" }}>{timeAgo(a.published_at)}</span>
+                            </div>
+                            <p style={{ fontSize: "14px", color: "#111827", lineHeight: 1.4, margin: 0 }}>{a.title}</p>
+                          </div>
+                          <span style={{ fontSize: "12px", color: "#9ca3af", flexShrink: 0 }}>↗</span>
                         </div>
-                      </div>
-                    </a>
-                  ))}
+                      </a>
+                    ))}
+                  </div>
                 </div>
               )}
-            </div>
+            </article>
 
+            {/* ── SIDEBAR ── */}
             <div style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
 
               {sentimentTotal > 0 && (
@@ -451,69 +334,46 @@ export default function TopicDetail() {
                       </div>
                     </div>
                   ))}
-                  <p style={{ fontSize: "11px", color: "#9ca3af", marginTop: "4px" }}>Based on {sentimentTotal} article{sentimentTotal !== 1 ? "s" : ""} analysed</p>
                 </div>
               )}
 
-              {sources.length > 0 && (
-                <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: "14px", padding: "18px 20px" }}>
-                  <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "11px", fontWeight: 700, color: "#9ca3af", letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: "14px" }}>SOURCES COVERING THIS</h3>
-                  <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                    {sources.map((src, i) => {
-                      const count = articles.filter(a => a.source === src).length;
-                      const pct = Math.round((count / articles.length) * 100);
-                      return (
-                        <div key={i}>
-                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "4px" }}>
-                            <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                              {getFavicon(src) && <img src={getFavicon(src)} alt="" width="14" height="14" style={{ borderRadius: "2px" }} onError={e => e.target.style.display = "none"} />}
-                              <span style={{ fontSize: "12px", color: "#374151" }}>{src.replace(" Nigeria", "").replace("YouTube — ", "")}</span>
-                            </div>
-                            <span style={{ fontSize: "11px", color: "#9ca3af" }}>{count} article{count !== 1 ? "s" : ""}</span>
-                          </div>
-                          <div style={{ height: "3px", background: "#f3f4f6", borderRadius: "2px", overflow: "hidden" }}>
-                            <div style={{ width: `${pct}%`, height: "100%", background: color + "70", borderRadius: "2px" }} />
-                          </div>
-                        </div>
-                      );
-                    })}
+              <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: "14px", padding: "18px 20px" }}>
+                <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "11px", fontWeight: 700, color: "#9ca3af", letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: "12px" }}>STORY DETAILS</h3>
+                <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between" }}>
+                    <span style={{ fontSize: "12px", color: "#6b7280" }}>Intensity</span>
+                    <span style={{ fontSize: "12px", fontWeight: 700, color: topic.intensity >= 8 ? "#dc2626" : topic.intensity >= 5 ? "#d97706" : "#16a34a" }}>{topic.intensity}/10</span>
                   </div>
+                  <div style={{ display: "flex", justifyContent: "space-between" }}>
+                    <span style={{ fontSize: "12px", color: "#6b7280" }}>Sources</span>
+                    <span style={{ fontSize: "12px", fontWeight: 700, color: "#111827" }}>{sources.length}</span>
+                  </div>
+                  {data?.confidence && (
+                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                      <span style={{ fontSize: "12px", color: "#6b7280" }}>AI Confidence</span>
+                      <span style={{ fontSize: "12px", fontWeight: 700, color: ACCENT }}>{Math.round(data.confidence * 100)}%</span>
+                    </div>
+                  )}
+                  {data?.generated_at && (
+                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                      <span style={{ fontSize: "12px", color: "#6b7280" }}>Last updated</span>
+                      <span style={{ fontSize: "12px", color: "#374151" }}>{timeAgo(data.generated_at)}</span>
+                    </div>
+                  )}
                 </div>
-              )}
+              </div>
 
               {relatedAlerts.length > 0 && (
                 <div style={{ background: "#fff7ed", border: "1px solid #fed7aa", borderRadius: "14px", padding: "18px 20px" }}>
                   <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "11px", fontWeight: 700, color: "#ea580c", letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: "14px" }}>🌍 GLOBAL IMPACT</h3>
                   <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-                    {relatedAlerts.map((alert, i) => (
+                    {relatedAlerts.slice(0, 3).map((alert, i) => (
                       <div key={i} style={{ borderTop: i > 0 ? "1px solid #fed7aa" : "none", paddingTop: i > 0 ? "12px" : 0 }}>
                         <p style={{ fontSize: "12px", fontWeight: 700, color: "#c2410c", marginBottom: "4px", lineHeight: 1.4 }}>{alert.event}</p>
                         <p style={{ fontSize: "12px", color: "#78350f", lineHeight: 1.55 }}>{alert.nigeria_impact}</p>
                       </div>
                     ))}
                   </div>
-                </div>
-              )}
-
-              {topic?.sources_cited?.length > 0 && (
-                <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: "14px", padding: "18px 20px" }}>
-                  <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "11px", fontWeight: 700, color: "#9ca3af", letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: "12px" }}>AI CITED SOURCES</h3>
-                  <div style={{ display: "flex", flexDirection: "column", gap: "7px" }}>
-                    {topic.sources_cited.map((s, i) => (
-                      <div key={i} style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                        <div style={{ width: "5px", height: "5px", borderRadius: "50%", background: color, flexShrink: 0 }} />
-                        <span style={{ fontSize: "12px", color: "#374151" }}>{s}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {data?.engine_used && (
-                <div style={{ background: "#f9fafb", border: "1px solid #e5e7eb", borderRadius: "14px", padding: "14px 18px" }}>
-                  <p style={{ fontSize: "10px", color: "#9ca3af", letterSpacing: "0.1em", marginBottom: "4px" }}>POWERED BY</p>
-                  <p style={{ fontSize: "13px", color: "#374151", fontWeight: 600 }}>{data.engine_used}</p>
-                  {data.confidence && <p style={{ fontSize: "11px", color: "#9ca3af", marginTop: "2px" }}>{Math.round(data.confidence * 100)}% confidence score</p>}
                 </div>
               )}
 
@@ -527,7 +387,7 @@ export default function TopicDetail() {
             </div>
           </div>
         </main>
-      )}
+      ) : null}
 
       <SiteFooter onBack={goHome} />
     </div>

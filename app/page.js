@@ -632,7 +632,6 @@ function FloatingSocialBar({ pulse }) {
     </div>
   );
 }
-
 // ─── AI CHAT WIDGET ──────────────────────────────────────────
 function AIChatWidget({ t, isOpen, onClose, pulse }) {
   const [messages, setMessages] = useState([{ role: "assistant", content: t.aiWelcome }]);
