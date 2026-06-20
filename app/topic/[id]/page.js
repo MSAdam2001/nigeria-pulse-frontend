@@ -1,4 +1,3 @@
-
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
@@ -69,45 +68,46 @@ function SiteHeader({ onBack }) {
       borderBottom: "1px solid #e5e7eb",
       padding: "0 16px",
     }}>
-      <div style={{
+      <div className="header-inner" style={{
         maxWidth: "1280px", margin: "0 auto",
         height: "62px", display: "flex",
-        alignItems: "center", justifyContent: "space-between", gap: "12px",
+        alignItems: "center", justifyContent: "space-between", gap: "8px",
       }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-          <button onClick={onBack} style={{
+        <div style={{ display: "flex", alignItems: "center", gap: "10px", minWidth: 0, flexShrink: 1 }}>
+          <button onClick={onBack} className="back-btn" style={{
             display: "flex", alignItems: "center", gap: "6px",
             background: "none", border: "none", cursor: "pointer",
             color: "#6b7280", fontSize: "13px", fontFamily: "inherit",
-            padding: "5px 0", transition: "color 0.15s",
+            padding: "5px 0", transition: "color 0.15s", flexShrink: 0,
+            whiteSpace: "nowrap",
           }}
             onMouseEnter={e => e.currentTarget.style.color = "#111827"}
             onMouseLeave={e => e.currentTarget.style.color = "#6b7280"}
           >
-            ← Back
+            ← <span className="back-label">Back</span>
           </button>
-          <span style={{ color: "#d1d5db" }}>|</span>
-          <div style={{ display: "flex", alignItems: "center", gap: "8px", cursor: "pointer" }} onClick={onBack}>
+          <span className="header-divider" style={{ color: "#d1d5db", flexShrink: 0 }}>|</span>
+          <div style={{ display: "flex", alignItems: "center", gap: "8px", cursor: "pointer", minWidth: 0 }} onClick={onBack}>
             <div style={{ width: "30px", height: "30px", borderRadius: "8px", background: ACCENT, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
               <div style={{ width: "12px", height: "2px", background: "#fff", borderRadius: "1px" }} />
             </div>
-            <div>
-              <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "16px", fontWeight: 800, color: "#111827", margin: 0 }}>
+            <div style={{ minWidth: 0 }}>
+              <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "16px", fontWeight: 800, color: "#111827", margin: 0, whiteSpace: "nowrap" }}>
                 Nigeria <span style={{ color: ACCENT }}>Pulse</span>
               </h1>
-              <p style={{ fontSize: "8px", color: "#9ca3af", letterSpacing: "0.12em", textTransform: "uppercase", margin: 0 }}>
+              <p className="brand-tagline" style={{ fontSize: "8px", color: "#9ca3af", letterSpacing: "0.12em", textTransform: "uppercase", margin: 0, whiteSpace: "nowrap" }}>
                 Real-Time National Intelligence
               </p>
             </div>
           </div>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <span style={{ fontSize: "10px", color: "#6b7280", background: "#f1f5f9", border: "1px solid #e5e7eb", borderRadius: "20px", padding: "4px 12px", letterSpacing: "0.06em" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "8px", flexShrink: 0 }}>
+          <span className="article-badge" style={{ fontSize: "10px", color: "#6b7280", background: "#f1f5f9", border: "1px solid #e5e7eb", borderRadius: "20px", padding: "4px 12px", letterSpacing: "0.06em", whiteSpace: "nowrap" }}>
             ARTICLE
           </span>
-          <span style={{ display: "inline-flex", alignItems: "center", gap: "5px", background: "#dcfce7", border: "1px solid #86efac", borderRadius: "20px", padding: "4px 10px" }}>
+          <span style={{ display: "inline-flex", alignItems: "center", gap: "5px", background: "#dcfce7", border: "1px solid #86efac", borderRadius: "20px", padding: "4px 10px", flexShrink: 0 }}>
             <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#16a34a", display: "inline-block", animation: "pulseDot 1.5s ease infinite" }} />
-            <span style={{ fontSize: "10px", color: "#15803d", fontWeight: 700, letterSpacing: "0.1em" }}>LIVE</span>
+            <span className="live-label" style={{ fontSize: "10px", color: "#15803d", fontWeight: 700, letterSpacing: "0.1em" }}>LIVE</span>
           </span>
         </div>
       </div>
@@ -117,7 +117,7 @@ function SiteHeader({ onBack }) {
 
 function SiteFooter({ onBack }) {
   return (
-    <footer style={{ borderTop: "1px solid #e5e7eb", background: "#f8fafc", padding: "28px 16px" }}>
+    <footer className="footer-padding" style={{ borderTop: "1px solid #e5e7eb", background: "#f8fafc", padding: "28px 16px" }}>
       <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "9px", marginBottom: "20px" }}>
           <div style={{ width: "26px", height: "26px", borderRadius: "6px", background: ACCENT, flexShrink: 0 }} />
@@ -128,15 +128,15 @@ function SiteFooter({ onBack }) {
             <p style={{ fontSize: "10px", color: "#9ca3af", margin: 0 }}>Built for the people of Nigeria</p>
           </div>
         </div>
-        <div style={{ borderTop: "1px solid #e5e7eb", paddingTop: "16px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "8px" }}>
+        <div className="footer-bottom" style={{ borderTop: "1px solid #e5e7eb", paddingTop: "16px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "8px" }}>
           <p style={{ fontSize: "11px", color: "#9ca3af" }}>© 2026 Nigeria Pulse · All rights reserved</p>
-          <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
+          <div style={{ display: "flex", gap: "12px", alignItems: "center", flexWrap: "wrap" }}>
             <button onClick={onBack} style={{
               fontSize: "12px", color: ACCENT, fontWeight: 600,
               background: "none", border: "none", cursor: "pointer",
               fontFamily: "inherit", textDecoration: "underline",
             }}>← Back to Nigeria Pulse</button>
-            <span style={{ fontSize: "11px", color: "#9ca3af" }}>Auto-refreshes every 5 min · 23+ sources · Powered by AI</span>
+            <span className="footer-meta" style={{ fontSize: "11px", color: "#9ca3af" }}>Auto-refreshes every 5 min · 23+ sources · Powered by AI</span>
           </div>
         </div>
       </div>
@@ -189,11 +189,31 @@ export default function TopicDetail() {
         .source-card { transition: box-shadow 0.2s, transform 0.2s; cursor: pointer; }
         .source-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08) !important; transform: translateY(-2px); }
         .page-grid { display: grid; grid-template-columns: 1fr 300px; gap: 40px; align-items: start; }
-        @media (max-width: 960px) { .page-grid { grid-template-columns: 1fr; } }
+
+        @media (max-width: 960px) {
+          .page-grid { grid-template-columns: 1fr; }
+        }
+
         @media (max-width: 640px) {
           .article-padding { padding: 24px 16px 60px !important; }
           .headline { font-size: 26px !important; }
           .body-text { font-size: 16px !important; }
+          .footer-padding { padding: 20px 16px !important; }
+          .footer-meta { display: none; }
+          .footer-bottom { flex-direction: column; align-items: flex-start !important; }
+        }
+
+        @media (max-width: 480px) {
+          .header-inner { height: 56px !important; }
+          .brand-tagline { display: none; }
+          .article-badge { display: none; }
+          .header-divider { display: none; }
+          .back-label { display: none; }
+          .back-btn { font-size: 16px !important; }
+        }
+
+        @media (max-width: 360px) {
+          .live-label { display: none; }
         }
       `}</style>
 
@@ -299,7 +319,7 @@ export default function TopicDetail() {
                               <span style={{ fontSize: "11px", fontWeight: 700, color }}>{a.source}</span>
                               <span style={{ fontSize: "11px", color: "#9ca3af" }}>{timeAgo(a.published_at)}</span>
                             </div>
-                            <p style={{ fontSize: "14px", color: "#111827", lineHeight: 1.4, margin: 0 }}>{a.title}</p>
+                            <p style={{ fontSize: "14px", color: "#111827", lineHeight: 1.4, margin: 0, wordBreak: "break-word" }}>{a.title}</p>
                           </div>
                           <span style={{ fontSize: "12px", color: "#9ca3af", flexShrink: 0 }}>↗</span>
                         </div>
